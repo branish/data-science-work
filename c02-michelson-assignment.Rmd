@@ -149,8 +149,6 @@ __q2__ Create a new variable `VelocityVacuum` with the $+92$ km/s adjustment to
 df_q2 <-
   df_michelson %>%
   mutate(VelocityVacuum = Velocity + 92)
-
-df_q2
 ```
 
 As part of his study, Michelson assessed the various potential sources of error,
@@ -195,22 +193,65 @@ data that might help explain the difference between Michelson's estimate and
 `LIGHTSPEED_VACUUM`?
 
 ```{r}
-LIGHTSPEED_VACUUM
+# VelocityVacuum distribution
 df_q2 %>%
   ggplot() +
-    geom_density(mapping = aes(x = VelocityVacuum, color = Distinctness)) +
-    geom_vline(aes(xintercept = LIGHTSPEED_VACUUM))
+  ggtitle("VelocityVacuum density") +
+  geom_density(mapping = aes(x = VelocityVacuum, color = Distinctness)) +
+  geom_vline(aes(xintercept = LIGHTSPEED_VACUUM))
 df_q2 %>%
   ggplot() +
-    geom_boxplot(aes(x = Temp, y = Distinctness))
+  ggtitle("VelocityVacuum histogram") +
+  geom_histogram(aes(x = VelocityVacuum)) +
+  geom_vline(aes(xintercept = LIGHTSPEED_VACUUM))
+
+# Distinctness vs Temp
 df_q2 %>%
   ggplot() +
-  geom_point(aes(x = Temp, y = VelocityVacuum)) +
+  ggtitle("Distinctness vs Temp") +
+  geom_boxplot(aes(x = Temp, y = Distinctness))
+
+# VelocityVacuum vs Distinctness
+df_q2 %>%
+  ggplot() +
+  ggtitle("VelocityVacuum vs Distinctness") +
+  geom_boxplot(aes(x = VelocityVacuum, y = Distinctness)) +
+  geom_vline(aes(xintercept = LIGHTSPEED_VACUUM))
+
+
+#VelocityVacuum vs Temp
+df_q2 %>%
+  ggplot() +
+  ggtitle("VelocityVacuum vs Temp") +
+  geom_point(aes(x = Temp, y = VelocityVacuum, color = Date)) +
   geom_smooth(aes(x = Temp, y = VelocityVacuum)) +
   geom_hline(aes(yintercept = LIGHTSPEED_VACUUM))
 df_q2 %>%
   ggplot() +
-  geom_point(aes(x = Date, y = VelocityVacuum))
+  ggtitle("VelocityVacuum vs Temp") +
+  geom_point(aes(x = Temp, y = VelocityVacuum, color = Date)) +
+  geom_hline(aes(yintercept = LIGHTSPEED_VACUUM))
+
+# VelocityVacuum vs Date
+df_q2 %>%
+  ggplot() +
+  ggtitle("VelocityVacuum vs Date") +
+  geom_point(aes(x = Date, y = VelocityVacuum, color = Temp)) +
+  geom_smooth(aes(x = Date, y = VelocityVacuum)) +
+  geom_hline(aes(yintercept = LIGHTSPEED_VACUUM))
+
+#Temp vs Date
+df_q2 %>%
+  ggplot() +
+  ggtitle("Temp vs Date") +
+  geom_point(mapping = aes(x = Date, y = Temp, color = VelocityVacuum))
+
+df_q2 %>%
+  mutate(Error = VelocityVacuum - LIGHTSPEED_VACUUM) %>%
+  ggplot() +
+  ggtitle("Error vs Date") +
+  geom_point(mapping = aes(x = Date, y = Error, color = Distinctness))
+  
 ```
 
 
