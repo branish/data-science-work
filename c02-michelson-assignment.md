@@ -134,8 +134,7 @@ those of Michelson *exactly*; why might this be?
 df_q1 <-
   df_michelson %>%
   group_by(Distinctness) %>%
-  summarize(n = n(), MeanVelocity = mean(Velocity)) %>%
-  ungroup()
+  summarize(n = n(), MeanVelocity = mean(Velocity))
 ```
 
     ## `summarise()` ungrouping output (override with `.groups` argument)
@@ -151,6 +150,31 @@ df_q1 %>%
 | 3            | 46 |     299861.7 |
 | 2            | 39 |     299858.5 |
 | 1            | 15 |     299808.0 |
+
+``` r
+df_michelson %>%
+  ggplot() +
+  labs(title = "Velocity vs Distinctness", caption = "black line: LIGHTSPEED_MICHELSON; blue line: Michelson's adjusted lightspeed; green line: actual light speed in vacuum") +
+  ylab("Velocity (km/s)") +
+  geom_boxplot(mapping = aes(x = Distinctness, y = Velocity)) +
+  geom_hline(yintercept = LIGHTSPEED_MICHELSON) +
+  geom_hline(yintercept = 299852.4, color = "blue") +
+  geom_hline(yintercept = LIGHTSPEED_VACUUM, color="green")
+```
+
+![](c02-michelson-assignment_files/figure-gfm/q1-task-1.png)<!-- -->
+
+``` r
+df_michelson %>%
+  ggplot() +
+  ggtitle("All velocity measurements") +
+  labs(caption = "green line: actual light speed in vacuum") +
+  xlab("Velocity (km/s)") +
+  geom_boxplot(mapping = aes(x = Velocity, y = "all samples")) +
+  geom_vline(xintercept = LIGHTSPEED_VACUUM, color="green")
+```
+
+![](c02-michelson-assignment_files/figure-gfm/q1-task-2.png)<!-- -->
 
 **Observations**: Michelson’s observations in that table are rounded to
 the nearest 10. Their average cannot be more precise than the original
@@ -172,24 +196,7 @@ adjustment to `Velocity`. Assign this new dataframe to `df_q2`.
 df_q2 <-
   df_michelson %>%
   mutate(VelocityVacuum = Velocity + 92)
-
-df_q2
 ```
-
-    ## # A tibble: 100 x 5
-    ##    Date                Distinctness  Temp Velocity VelocityVacuum
-    ##    <dttm>              <fct>        <dbl>    <dbl>          <dbl>
-    ##  1 1879-06-05 00:00:00 3               76   299850         299942
-    ##  2 1879-06-07 00:00:00 2               72   299740         299832
-    ##  3 1879-06-07 00:00:00 2               72   299900         299992
-    ##  4 1879-06-07 00:00:00 2               72   300070         300162
-    ##  5 1879-06-07 00:00:00 2               72   299930         300022
-    ##  6 1879-06-07 00:00:00 2               72   299850         299942
-    ##  7 1879-06-09 00:00:00 3               83   299950         300042
-    ##  8 1879-06-09 00:00:00 3               83   299980         300072
-    ##  9 1879-06-09 00:00:00 3               83   299980         300072
-    ## 10 1879-06-09 00:00:00 3               83   299880         299972
-    ## # ... with 90 more rows
 
 As part of his study, Michelson assessed the various potential sources
 of error, and provided his best-guess for the error in his
@@ -219,16 +226,15 @@ uncertainty) greater or less than the true error?
 ``` r
 ## TODO: Compare Michelson's estimate and error against the true value
 ## Your code here!
-abs(LIGHTSPEED_VACUUM - LIGHTSPEED_MICHELSON)
+errs <- c(abs(LIGHTSPEED_VACUUM - LIGHTSPEED_MICHELSON), LIGHTSPEED_PM)
+names <- c("True error", "Michelson's estimated error")
+ggplot() +
+  ylab("Error (km/s)") +
+  xlab("") +
+  geom_col(mapping = aes(x = names, y = errs))
 ```
 
-    ## [1] 151.542
-
-``` r
-LIGHTSPEED_PM
-```
-
-    ## [1] 51
+![](c02-michelson-assignment_files/figure-gfm/q3-task-1.png)<!-- -->
 
 **Observations**: - Michelson’s uncertainty value was a third of the
 actual error.
@@ -239,16 +245,12 @@ there other patterns in the data that might help explain the difference
 between Michelson’s estimate and `LIGHTSPEED_VACUUM`?
 
 ``` r
-LIGHTSPEED_VACUUM
-```
-
-    ## [1] 299792.5
-
-``` r
+# VelocityVacuum distribution
 df_q2 %>%
   ggplot() +
-    geom_density(mapping = aes(x = VelocityVacuum, color = Distinctness)) +
-    geom_vline(aes(xintercept = LIGHTSPEED_VACUUM))
+  ggtitle("VelocityVacuum density") +
+  geom_density(mapping = aes(x = VelocityVacuum, color = Distinctness)) +
+  geom_vline(aes(xintercept = LIGHTSPEED_VACUUM))
 ```
 
 ![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
@@ -256,23 +258,93 @@ df_q2 %>%
 ``` r
 df_q2 %>%
   ggplot() +
-    geom_violin(mapping = aes(x = Temp, y = Distinctness)) +
-    geom_boxplot(aes(x = Temp, y = Distinctness))
+  ggtitle("VelocityVacuum histogram") +
+  geom_histogram(aes(x = VelocityVacuum)) +
+  geom_vline(aes(xintercept = LIGHTSPEED_VACUUM))
 ```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
 ![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-2-2.png)<!-- -->
 
 ``` r
+# Distinctness vs Temp
 df_q2 %>%
   ggplot() +
-  geom_point(aes(x = Temp, y = VelocityVacuum)) +
+  ggtitle("Distinctness vs Temp") +
+  geom_boxplot(aes(x = Temp, y = Distinctness))
+```
+
+![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-2-3.png)<!-- -->
+
+``` r
+# VelocityVacuum vs Distinctness
+df_q2 %>%
+  ggplot() +
+  ggtitle("VelocityVacuum vs Distinctness") +
+  geom_boxplot(aes(x = VelocityVacuum, y = Distinctness)) +
+  geom_vline(aes(xintercept = LIGHTSPEED_VACUUM))
+```
+
+![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-2-4.png)<!-- -->
+
+``` r
+#VelocityVacuum vs Temp
+df_q2 %>%
+  ggplot() +
+  ggtitle("VelocityVacuum vs Temp") +
+  geom_point(aes(x = Temp, y = VelocityVacuum, color = Date)) +
   geom_smooth(aes(x = Temp, y = VelocityVacuum)) +
   geom_hline(aes(yintercept = LIGHTSPEED_VACUUM))
 ```
 
     ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 
-![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-2-3.png)<!-- -->
+![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-2-5.png)<!-- -->
+
+``` r
+df_q2 %>%
+  ggplot() +
+  ggtitle("VelocityVacuum vs Temp") +
+  geom_point(aes(x = Temp, y = VelocityVacuum, color = Date)) +
+  geom_hline(aes(yintercept = LIGHTSPEED_VACUUM))
+```
+
+![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-2-6.png)<!-- -->
+
+``` r
+# VelocityVacuum vs Date
+df_q2 %>%
+  ggplot() +
+  ggtitle("VelocityVacuum vs Date") +
+  geom_point(aes(x = Date, y = VelocityVacuum, color = Temp)) +
+  geom_smooth(aes(x = Date, y = VelocityVacuum)) +
+  geom_hline(aes(yintercept = LIGHTSPEED_VACUUM))
+```
+
+    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+
+![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-2-7.png)<!-- -->
+
+``` r
+#Temp vs Date
+df_q2 %>%
+  ggplot() +
+  ggtitle("Temp vs Date") +
+  geom_point(mapping = aes(x = Date, y = Temp, color = VelocityVacuum))
+```
+
+![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-2-8.png)<!-- -->
+
+``` r
+df_q2 %>%
+  mutate(Error = VelocityVacuum - LIGHTSPEED_VACUUM) %>%
+  ggplot() +
+  ggtitle("Error vs Date") +
+  geom_point(mapping = aes(x = Date, y = Error, color = Distinctness))
+```
+
+![](c02-michelson-assignment_files/figure-gfm/unnamed-chunk-2-9.png)<!-- -->
 
 ## Bibliography
 
