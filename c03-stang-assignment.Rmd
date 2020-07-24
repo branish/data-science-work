@@ -43,6 +43,7 @@ All the deliverables stated in the rubrics above are due on the day of the class
 
 ```{r setup}
 library(tidyverse)
+library(viridis)
 ```
 
 *Background*: In 1946, scientists at the Bureau of Standards tested a number of Aluminum plates to determine their [elasticity](https://en.wikipedia.org/wiki/Elastic_modulus) and [Poisson's ratio](https://en.wikipedia.org/wiki/Poisson%27s_ratio). These are key quantities used in the design of structural members, such as aircraft skin under [buckling loads](https://en.wikipedia.org/wiki/Buckling). These scientists tested plats of various thicknesses, and at different angles with respect to the [rolling](https://en.wikipedia.org/wiki/Rolling_(metalworking)) direction.
@@ -71,7 +72,15 @@ __q1__ Tidy `df_stang` to produce `df_stang_long`. You should have column names 
 ```{r q1-task}
 ## TASK: Tidy `df_stang`
 df_stang_long <-
-  df_stang
+  df_stang %>%
+  pivot_longer(
+    names_sep = "_",
+    names_to = c(".value", "angle"),
+    names_transform = list(angle = as.integer),
+    cols = c(2:7)
+  ) %>%
+  filter(E > 0)
+  
 
 df_stang_long
 ```
@@ -107,20 +116,34 @@ __q2__ Perform a basic EDA on the aluminum data *without visualization*. Use you
 
 ```{r q2-task}
 ##
+df_stang_long %>% select(-alloy) %>% arrange(thick, angle)
+
+# number of entries for each alloy -- shows there is only one alloy
+df_stang_long %>% group_by(alloy) %>% count()
+
+# number of angles tested
+df_stang_long %>% group_by(angle) %>% summarize()
+
+# thickness values tested
+df_stang_long %>% group_by(thick) %>% summarize()
+
 ```
 
 **Observations**:
 
 - Is there "one true value" for the material properties of Aluminum?
+No. For the same thickness and angle, there are often multiple measured values for mu and E.
+
 - How many aluminum alloys were tested? How do you know?
+One alloy. All the rows have alloy == al_24st.
+
 - What angles were tested?
+0, 45, and 90 degrees.
+
 - What thicknesses were tested?
-- (Write your own question here)
-- No; we see a variety of values for `E` and `mu`.
-- Just one alloy: al_24st
-- Angles: 0, 45, 90 (degrees)
-- Thicknesses: 0.022, 0.032, 0.064, 0.081 (in)
-- I'm curious if the properties `E, mu` vary with thickness
+.022, .032, .064, and .081 inches.
+
+- What is the relationship between thickness and E? 
 
 ## Visualize
 <!-- ------------------------- -->
@@ -129,7 +152,51 @@ __q3__ Create a visualization to investigate your question from q1 above. Can yo
 
 ```{r q3-task}
 ## TASK: Investigate your question from q1 here
+
+df_stang_long %>%
+  ggplot() +
+  ggtitle("E vs thickness for different angles") +
+  geom_point(mapping = aes(x = factor(thick), y = E, group = angle), size = 2, alpha = .3) +
+  facet_wrap( ~ angle)
+  
+df_stang_long %>%
+  ggplot() +
+  ggtitle("E vs thickness") +
+  geom_boxplot(mapping = aes(x = factor(thick), y = E))
+
 ```
+- Three of the tested thicknesses have almost the same measured elasticity, but the thickest sample shows a much lower elasticity.
+    - For thicknesses 0.022, 0.032, and 0.064, the measured values for elasticity just barely intersect. Only the thickest material shows a definite decrease in elasticity.
+- However, the average elasticity was actually higher at 0.064 inches than at 0.032 inches. If there is a relationship between thickness and elasticity, either it's not monotonic or this is an effect of random error that might disappear with more data samples.
+
+```{r}
+df_stang_long %>%
+  ggplot() +
+  ggtitle("E vs angle") +
+  #scale_fill_viridis() +
+  geom_boxplot(mapping = aes(x = factor(angle), y = E))
+
+```
+
+- The angle of force doesn't affect elasticity much.
+
+
+```{r}
+df_stang_long %>%
+  ggplot() +
+  ggtitle("mu vs thickness") +
+  geom_boxplot(mapping = aes(x = factor(thick), y = mu))
+
+```
+- Poisson's ratio shows the same pattern that elasticity showed with regard to thickness. Three of the material samples tested have approximately the same value for mu, but the thickest sample has a much lower average for mu.
+
+```{r}
+df_stang_long %>%
+  ggplot() +
+  ggtitle("mu vs angle") +
+  geom_boxplot(mapping = aes(x = factor(angle), y = mu))
+```
+- Over different angles, the measured ranges for mu overlap almost completely. Poisson's ratio is probably not affected by angle of force.
 
 **Observations**:
 
@@ -152,7 +219,7 @@ df_stang_long %>%
 
 **Observations**:
 
-- Does this graph support or contradict the claim above?
+- This graph contradicts the claim above. The samples with thickness 0.081 inches have consistently lower elasticity than the other three material thicknesses. It appears that the amount of material does affect elasticity.
 
 # References
 <!-- -------------------------------------------------- -->
