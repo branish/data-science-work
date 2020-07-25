@@ -42,7 +42,7 @@ All the deliverables stated in the rubrics above are due on the day of the class
 ```{r setup}
 library(tidyverse)
 library(gapminder)
-
+library(knitr)
 ```
 
 *Background*: [Gapminder](https://www.gapminder.org/about-gapminder/) is an independent organization that seeks to education people about the state of the world. They promote a "fact-based worldview" by focusing on data. The dataset we'll study in this challenge is from Gapminder.
@@ -93,84 +93,122 @@ early <-
   gapminder %>%
   filter(year %in% year_min) %>%
   mutate(gdp = gdpPercap * pop)
+```
 
-
-top3gdp <- 
-  early %>%
-  filter(rank(desc(gdp)) < 4) %>%
-  select(country)
-
-top3pop <- 
-  early %>%
-  filter(rank(desc(pop)) < 4) %>%
-  select(country)
-
-top3gdppercap <- 
-  early %>%
-  filter(rank(desc(gdpPercap)) < 4) %>%
-  select(country)
-
-
+```{r q2-continents}
 early %>%
   select(continent, pop, gdp) %>%
   group_by(continent) %>%
   summarize(gdpTotal = sum(gdp), popTotal = sum(pop)) %>%
   mutate(gdpPercap = gdpTotal / popTotal) %>%
   ggplot() +
+  ggtitle("GDP per capita for each continent - 1952") +
   geom_col(aes(x = continent, y = gdpPercap))
+```
+I interpreted the prompt as a request to plot the gdp per capita for each continent. The challenge then was to calculate the GDP per capita by dividing the sum of all GDPs on the continent by the total population of the continent.
+
+However, there can't be three outliers among only five continents. I'll go back to looking at individual countries to find some outliers.
 
 
+```{r q2-gdppercap}
 early %>%
   ggplot() +
-  ggtitle("Distribution of GDP per capita for each country in a continent") +
+  ggtitle("Distribution of GDP per capita for each country in a continent - 1952") +
   geom_boxplot(aes(x = continent, y = gdpPercap))
+```
+The outlier in Asia is compressing all the other data points into the bottom of the plot. What country is that?
+```{r q2-gdppercap-top}
+top3GdpPercap <- 
+  early %>%
+  select(country, gdpPercap) %>%
+  arrange(desc(gdpPercap)) %>%
+  slice(1:3) %>%
+  mutate(rank = rank(desc(gdpPercap)))
+top3GdpPercap <- top3GdpPercap[ , c('rank', 'country', 'gdpPercap')]
+topGdpPercap <- slice(top3GdpPercap, 1)
+kable(top3GdpPercap, caption = 'Top 3 countries ranked by GDP per capita in 1952')
+```
+It's Kuwait.
 
+```{r q2-gdppercap-2}
 early %>%
-  filter(!(country %in% top3gdppercap$country)) %>%
+  filter(!(country %in% topGdpPercap$country)) %>%
   ggplot() +
-  ggtitle("Distribution of GDP per capita for each country in a continent") +
-  labs(subtitle = "minus top 3 ranking countries") +
+  ggtitle("Distribution of GDP per capita for each country in a continent - 1952") +
+  labs(subtitle = "excluding Kuwait") +
   geom_boxplot(aes(x = continent, y = gdpPercap))
+```
+
+Now I'll look at GDP and population.
+```{r q2-outliers}
+# Top 3 countries ranked by GDP
+top3gdp <- 
+  early %>%
+  select(country, gdp) %>%
+  arrange(desc(gdp)) %>%
+  slice(1:3) %>%
+  mutate(rank = rank(desc(gdp)))
+top3gdp <- top3gdp[ , c('rank', 'country', 'gdp')] # How do I reorder columns in the same pipeline/expression as the mutate?
+topGdp = top3gdp %>% slice(1)
+kable(top3gdp, caption = 'Top 3 countries ranked by GDP in 1952')
+
+# Top 3 countries ranked by population
+top3pop <- 
+  early %>%
+  select(country, pop) %>%
+  arrange(desc(pop)) %>%
+  slice(1:3) %>%
+  mutate(rank = rank(desc(pop)))
+top3pop <- top3pop[ , c('rank', 'country', 'pop')]
+topPop = top3pop %>% slice(1:2)
+kable(top3pop, caption = 'Top 3 countries ranked by population in 1952')
+```
 
 
+```{r q2-gdp}
 early %>%
   ggplot() +
-  ggtitle("Distribution of GDP for each country in a continent") +
+  ggtitle("Distribution of GDP for each country in a continent - 1952") +
   geom_boxplot(aes(x = continent, y = gdp))
 
-early %>%
-  filter(!(country %in% top3gdp$country)) %>%
-  ggplot() +
-  ggtitle("Distribution of GDP for each country in a continent") +
-  labs(subtitle = "minus top 3 ranking countries") +
-  geom_boxplot(aes(x = continent, y = gdp))
+ early %>%
+   filter(!(country %in% topGdp$country)) %>%
+   ggplot() +
+   ggtitle("Distribution of GDP for each country in a continent - 1952") +
+   labs(subtitle = "excluding United States") +
+   geom_boxplot(aes(x = continent, y = gdp))
+```
 
 
+```{r q2-pop}
 early %>%
   ggplot() +
-  ggtitle("Distribution of country populations in a continent") +
+  ggtitle("Distribution of country populations in each continent - 1952") +
   geom_boxplot(aes(x = continent, y = pop))
 
 early %>%
   filter(!(country %in% top3pop$country)) %>%
   ggplot() +
-  ggtitle("Distribution of country populations in a continent") +
-  labs(subtitle = "minus top 3 ranking countries") +
+  ggtitle("Distribution of country populations in each continent - 1952") +
+  labs(subtitle = "excluding China and India") +
   geom_boxplot(aes(x = continent, y = pop))
 
 early %>%
-  filter(continent == "Asia") %>%
+  filter(!(country %in% topGdpPercap$country), !(country %in% topPop$country)) %>%
   ggplot() +
-  geom_point(aes(x = pop, y = gdpPercap, color = country))
+  ggtitle('GDP per capita vs. population for countries in each continent - 1952') +
+  labs(subtitle = 'excluding Kuwait, China, and India') +
+  geom_point(aes(x = pop, y = gdpPercap)) +
+  facet_wrap( ~ continent)
 
 
 early %>%
+  #filter(!(country %in% topGdpPercap$country)) %>%
   ggplot() +
-  geom_point(aes(x = pop, y = gdpPercap))
+  ggtitle('GDP per capita vs. population for all countries in dataset - 1952') +
+  #labs(subtitle = 'excluding Kuwait') +
+  geom_point(aes(x = pop, y = gdpPercap, shape = continent), size = 2)
 
-early %>%
-  arrange(desc(pop))
-  
 ```
 
 **Observations**:
@@ -183,15 +221,15 @@ early %>%
 
 __q3__ You should have found at least three outliers in q2. Identify those outliers (figure out which countries they are).
 
-*Note*: I realize the reasons for
-
 ```{r q3-task}
 ## TASK: Identify the outliers from q2
+kable(topPop, caption = "Highest population")
+kable(topGdpPercap, caption = "Highest GDP per capita")
 ```
 
 **Observations**:
 
-- Kuwait (GDP per capita), USA (GDP), China and India (population)
+- Kuwait (GDP per capita), China and India (population)
 
 __q4__ Create a plot similar to yours from q2 studying both `year_min` and `year_max`. Find a way to highlight the outliers from q3 on your plot. Compare the patterns between `year_min` and `year_max`.
 
@@ -199,11 +237,56 @@ __q4__ Create a plot similar to yours from q2 studying both `year_min` and `year
 
 ```{r q4-task}
 ## TASK: Create a visual of gdpPercap vs continent
+late <-
+  gapminder %>%
+  filter(year %in% year_max)
+
+outliers <-
+  topGdpPercap %>%
+  full_join(topPop) %>%
+  select(country)
+
+both <- full_join(early, late)
+bothoutliers <- both %>% filter(country %in% outliers$country)
+
+both %>%
+  ggplot() +
+  ggtitle('GDP per capita vs. population for all countries in dataset') +
+  geom_point(aes(x = pop, y = gdpPercap, shape = continent), size = 2) +
+  geom_point(data = bothoutliers, aes(x = pop, y = gdpPercap, shape = continent, color = country), size = 2) +
+  facet_wrap( ~ year)
+
+both %>%
+  filter(!(country %in% outliers$country)) %>%
+  ggplot() +
+  ggtitle('GDP per capita vs population for all countries EXCEPT Kuwait, China, India') +
+  geom_point(aes(x = pop, y = gdpPercap, shape = continent), size = 2) +
+  facet_wrap( ~ year)
+
+bothoutliers %>%
+  filter(country == "Kuwait") %>%
+  ggplot() +
+  ggtitle("GDP per capita vs population for Kuwait in 1952 and 2007") +
+  geom_line(aes(x = pop, y = gdpPercap, group = country), size = .5, linetype = "longdash") +
+  geom_point(aes(x = pop, y = gdpPercap, shape = factor(year)), size = 3) +
+  expand_limits(x = 0, y = 0)
+
+bothoutliers %>%
+  filter(country %in% c("China", "India")) %>%
+  ggplot() +
+  ggtitle("GDP per capita vs population for China and India in 1952 and 2007") +
+  geom_line(aes(x = pop, y = gdpPercap, color = country, group = country), size = .5, linetype = "longdash") +
+  geom_point(aes(x = pop, y = gdpPercap, color = country, shape = factor(year)), size = 3) +
+  expand_limits(x = 0, y = 0)
+
+
 ```
 
 **Observations**:
 
-- Write your observations here
+* Kuwait's population grew by an order of magnitude, yet its GDP per capita only fell by a little more than 50%.
+* China and India saw a severalfold increase in both GDP and population. In particular, China's population (more than) doubled, while its GDP per capita rose by an order of magnitude.
+* I wonder if these GDP figures are adjusted for inflation.
 
 # Your Own EDA
 <!-- -------------------------------------------------- -->
@@ -214,13 +297,20 @@ __q5__ Create *at least* three new figures below. With each figure, try to pose 
 
 ```{r q5-task1}
 ## TASK: Your first graph
+usacanada <- gapminder %>% filter(country %in% c("United States", "Canada"))
+gapminder %>%
+  filter(continent == "Americas", !(country %in% c("United States", "Canada"))) %>%
+  ggplot() +
+  geom_line(aes(x = year, y = gdpPercap, color = country)) +
+  #geom_line(data = usacanada, aes(x = year, y = gdpPercap, linetype = country), size = 2) +
+  geom_line(data = filter(gapminder, country == "Argentina"), aes(x = year, y = gdpPercap, color = country), size = 2)
 ```
-
+Q: Four countries in Central + South America saw a notable dip in GDP per capita in 2002, but then recovered by 2007. What happened and why did it only affect those countries?
 
 ```{r q5-task2}
 ## TASK: Your second graph
 ```
-
+Sorry this isn't finished, I've fallen a couple days behind.
 
 ```{r q5-task3}
 ## TASK: Your third graph
