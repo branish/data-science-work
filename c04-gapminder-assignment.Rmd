@@ -57,6 +57,7 @@ dataset?
 
 ```{r q0-task}
 ## TASK: Do your "first checks" here!
+glimpse(gapminder)
 ```
 
 **Observations**:
@@ -67,8 +68,8 @@ __q1__ Determine the most and least recent years in the `gapminder` dataset.
 
 ```{r q1-task}
 ## TASK: Find the largest and smallest values of `year` in `gapminder`
-year_max <- NA_real_
-year_min <- NA_real_
+year_max <- summarize(gapminder, max(year))[1]
+year_min <- summarize(gapminder, min(year))[1]
 ```
 
 Use the following test to check your work.
@@ -88,6 +89,88 @@ You may encounter difficulties in visualizing these data; if so document your ch
 
 ```{r q2-task}
 ## TASK: Create a visual of gdpPercap vs continent
+early <-
+  gapminder %>%
+  filter(year %in% year_min) %>%
+  mutate(gdp = gdpPercap * pop)
+
+
+top3gdp <- 
+  early %>%
+  filter(rank(desc(gdp)) < 4) %>%
+  select(country)
+
+top3pop <- 
+  early %>%
+  filter(rank(desc(pop)) < 4) %>%
+  select(country)
+
+top3gdppercap <- 
+  early %>%
+  filter(rank(desc(gdpPercap)) < 4) %>%
+  select(country)
+
+
+early %>%
+  select(continent, pop, gdp) %>%
+  group_by(continent) %>%
+  summarize(gdpTotal = sum(gdp), popTotal = sum(pop)) %>%
+  mutate(gdpPercap = gdpTotal / popTotal) %>%
+  ggplot() +
+  geom_col(aes(x = continent, y = gdpPercap))
+
+
+early %>%
+  ggplot() +
+  ggtitle("Distribution of GDP per capita for each country in a continent") +
+  geom_boxplot(aes(x = continent, y = gdpPercap))
+
+early %>%
+  filter(!(country %in% top3gdppercap$country)) %>%
+  ggplot() +
+  ggtitle("Distribution of GDP per capita for each country in a continent") +
+  labs(subtitle = "minus top 3 ranking countries") +
+  geom_boxplot(aes(x = continent, y = gdpPercap))
+
+
+early %>%
+  ggplot() +
+  ggtitle("Distribution of GDP for each country in a continent") +
+  geom_boxplot(aes(x = continent, y = gdp))
+
+early %>%
+  filter(!(country %in% top3gdp$country)) %>%
+  ggplot() +
+  ggtitle("Distribution of GDP for each country in a continent") +
+  labs(subtitle = "minus top 3 ranking countries") +
+  geom_boxplot(aes(x = continent, y = gdp))
+
+
+early %>%
+  ggplot() +
+  ggtitle("Distribution of country populations in a continent") +
+  geom_boxplot(aes(x = continent, y = pop))
+
+early %>%
+  filter(!(country %in% top3pop$country)) %>%
+  ggplot() +
+  ggtitle("Distribution of country populations in a continent") +
+  labs(subtitle = "minus top 3 ranking countries") +
+  geom_boxplot(aes(x = continent, y = pop))
+
+early %>%
+  filter(continent == "Asia") %>%
+  ggplot() +
+  geom_point(aes(x = pop, y = gdpPercap, color = country))
+
+
+early %>%
+  ggplot() +
+  geom_point(aes(x = pop, y = gdpPercap))
+
+early %>%
+  arrange(desc(pop))
+  
 ```
 
 **Observations**:
@@ -96,7 +179,7 @@ You may encounter difficulties in visualizing these data; if so document your ch
 
 **Difficulties & Approaches**:
 
-- Write your challenges and your approach to solving them
+- If you try to plot gdpPerCap vs continent, geom_col will automatically try to add up the gdpPerCap of every country without taking into account the populations of each country. You need to calculate the GDP for each country, the GDP and population of each continent, and the GDP per capita of each continent manually.
 
 __q3__ You should have found at least three outliers in q2. Identify those outliers (figure out which countries they are).
 
@@ -108,7 +191,7 @@ __q3__ You should have found at least three outliers in q2. Identify those outli
 
 **Observations**:
 
-- Identify the outlier countries from q2
+- Kuwait (GDP per capita), USA (GDP), China and India (population)
 
 __q4__ Create a plot similar to yours from q2 studying both `year_min` and `year_max`. Find a way to highlight the outliers from q3 on your plot. Compare the patterns between `year_min` and `year_max`.
 
