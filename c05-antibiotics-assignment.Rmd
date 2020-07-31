@@ -1,6 +1,6 @@
 ---
 title: "Antibiotics"
-author: "(Your name here)"
+author: "branish"
 date: 2020-
 output:
   github_document:
@@ -12,31 +12,6 @@ output:
 In this challenge you'll visualize the same data in two different ways, aimed at two different purposes.
 
 *Note*: Please complete your initial visual design **alone**. Work on both of your graphs alone, and save a version to your repo *before* coming together with your team. This way you can all bring a diversity of ideas to the table!
-
-<!-- include-rubric -->
-# Grading Rubric
-<!-- -------------------------------------------------- -->
-
-Unlike exercises, **challenges will be graded**. The following rubrics define how you will be graded, both on an individual and team basis.
-
-## Individual
-<!-- ------------------------- -->
-
-| Category | Unsatisfactory | Satisfactory |
-|----------|----------------|--------------|
-| Effort | Some task __q__'s left unattempted | All task __q__'s attempted |
-| Observed | Did not document observations | Documented observations based on analysis |
-| Supported | Some observations not supported by analysis | All observations supported by analysis (table, graph, etc.) |
-| Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
-
-## Team
-<!-- ------------------------- -->
-
-| Category | Unsatisfactory | Satisfactory |
-|----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed to Wiki |
-| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to assertion, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis |
 
 ## Due Date
 <!-- ------------------------- -->
@@ -73,12 +48,93 @@ __q1__ Create a visualization of `df_antibiotics` that helps you to compare the 
 
 ```{r q1-task}
 ## TASK: Create your visualization
+glimpse(df_antibiotics)
+
+ab2 <- 
+  df_antibiotics %>%
+  pivot_longer(names_to = "antibiotic", values_to = "mic", cols = c(-bacteria, -gram))
+
+# ab2 %>%
+#   ggplot(mapping = aes(antibiotic, mic)) +
+#   geom_point(aes(color = bacteria)) +
+#   geom_hline(yintercept = 0.1) +
+#   scale_y_log10()
+
+# I tried using the color aesthetic to show the hline on the legend, but the
+#legend didn't show up, probably because there's only one line.
+# This size hack is hacky...but it *almost* does what I wanted (I'd just like a better legend label).
+ab2 %>%
+  #filter(mic < 0.1) %>%
+  ggplot(mapping = aes(bacteria, mic)) +
+  ggtitle('MIC of three antibiotics for various bacteria') +
+  labs(subtitle = 'Black line: MIC threshold for treating human patients') +
+  geom_point(aes(color = antibiotic, shape = antibiotic, size = (mic > .9e2))) +
+  #geom_col(aes(fill = antibiotic), position = position_dodge2(preserve = "single", padding = 0.2)) +
+  geom_hline(yintercept = 0.1) + 
+  scale_y_log10() +
+  coord_flip()
+
 ```
+Penicillin has an unacceptably high MIC for several bacteria. The highest MICs for penicillin are orders of magnitude larger than the highest MICs for neomycin and streptomycin. Penicillin was the first antibiotic discovered, so it's likely that these bacteria have had a long time to perfect their resistance to it.
+
+Since we can only consider antibiotics with a MIC <= 0.1 for treating humans, let's ignore the MICs higher than 0.1.
+```{r}
+ab2 %>%
+  filter(mic < 0.1) %>%
+  ggplot(mapping = aes(bacteria, mic)) +
+  ggtitle('MIC of three antibiotics for various bacteria') +
+  labs(subtitle = "Only showing MIC values <= 0.1") +
+  ylim(0, 0.1) +
+  geom_point(aes(color = antibiotic, shape = antibiotic), size = 2) +
+  geom_hline(yintercept = 0.1) +
+  coord_flip() #+
+  #scale_y_log10()
+
+```
+This plot shows only MIC values <= 0.1. For several bacteria (Pseudomonas aeruginosa, Mycobacterium tuberculosis, Klebsiella pneumoniae, Aerobacter aerogenes), all three antibiotics have a MIC over 0.1. I understand this to mean that these antibiotics cannot be used to treat these bacteria in humans.
+
+For several more bacteria there is only one antibiotic with a MIC under 0.1.
+Neomycin:
+- Streptococcus fecalis
+- Salmonella schottmuelleri
+- Salmonella typhosa
+- Escherichia coli
+Penicillin:
+- Streptococcus viridans
+- Streprococcus hemolyticus
+- Diplococcus pneumonia
+
+```{r}
+humans <- ab2 %>% filter(mic <= 0.1)
+distinct(humans, bacteria)
+
+df_antibiotics %>%
+  anti_join(humans, by = 'bacteria') %>%
+  select(-gram) %>%
+  knitr::kable(caption = "Bacteria with all three MICs > 0.1")
+
+# neomycin
+df_antibiotics %>%
+  semi_join(humans, by = 'bacteria') %>%
+  filter(penicillin > 0.1, streptomycin > 0.1) %>%
+  select(-gram) %>%
+  knitr::kable(caption = "Bacteria that can only be treated with neomycin")
+
+df_antibiotics %>%
+  semi_join(humans, by = 'bacteria') %>%
+  filter(neomycin > 0.1, streptomycin > 0.1) %>%
+  select(-gram) %>%
+  knitr::kable(caption = "Bacteria that can only be treated with penicillin")
+
+```
+
+
+
 
 **Observations**:
 
-- Record your observations here
-- Can you make any broad statements about antibiotic effectiveness?
+Many species of bacteria have high resistance to penicillin, but it is still the best antibiotic for treating some species.
+There are no species that can only be treated with streptomycin.
 
 ## Purpose: Categorize Bacteria
 <!-- ------------------------- -->
@@ -89,11 +145,28 @@ __q2__ Create a visualization of `df_antibiotics` that helps you to categorize b
 
 ```{r q2-task}
 ## TASK: Create your visualization
+
+ab3 <- 
+  ab2 %>%
+  separate(col = bacteria, into = c('before', NA, 'after'), sep = '[()]', remove = FALSE) %>% # So hacky
+  unite(col = 'bacteria2', before, after, sep = ' ', na.rm = TRUE, remove = TRUE) %>%
+  separate(col = bacteria2, into = c('genus', 'species'), remove = TRUE)
+ab3
+
+ab3 %>%
+  arrange(gram) %>%
+  ggplot(aes(x = genus, y = mic)) +
+  geom_point(aes(shape = antibiotic, color = gram), size = 2) +
+  #geom_tile(aes(x = genus, y = gram, fill = gram), sides = 'l', inherit.aes = FALSE) +
+  geom_hline(yintercept = 0.1) +
+  coord_flip()  +
+  scale_y_log10() 
+
 ```
 
 **Observations**:
+The gram-negative genera tend to be more difficult to treat. Penicillin is good at treating the gram-positive genera.
 
-- Document your observations here!
 
 # References
 <!-- -------------------------------------------------- -->
