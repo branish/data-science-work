@@ -11,35 +11,6 @@ output:
 
 In this challenge, you'll learn how to navigate the U.S. Census Bureau website, programmatically download data from the internet, and perform a county-level population-weighted analysis of current covid-19 trends. Get excited!
 
-<!-- include-rubric -->
-# Grading Rubric
-<!-- -------------------------------------------------- -->
-
-Unlike exercises, **challenges will be graded**. The following rubrics define how you will be graded, both on an individual and team basis.
-
-## Individual
-<!-- ------------------------- -->
-
-| Category | Unsatisfactory | Satisfactory |
-|----------|----------------|--------------|
-| Effort | Some task __q__'s left unattempted | All task __q__'s attempted |
-| Observed | Did not document observations | Documented observations based on analysis |
-| Supported | Some observations not supported by analysis | All observations supported by analysis (table, graph, etc.) |
-| Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
-
-## Team
-<!-- ------------------------- -->
-
-| Category | Unsatisfactory | Satisfactory |
-|----------|----------------|--------------|
-| Documented | No team contributions to Wiki | Team contributed to Wiki |
-| Referenced | No team references in Wiki | At least one reference in Wiki to member report(s) |
-| Relevant | References unrelated to assertion, or difficult to find related analysis based on reference text | Reference text clearly points to relevant analysis |
-
-## Due Date
-<!-- ------------------------- -->
-
-All the deliverables stated in the rubrics above are due on the day of the class discussion of that exercise. See the [Syllabus](https://docs.google.com/document/d/1jJTh2DH8nVJd2eyMMoyNGroReo0BKcJrz1eONi3rPSc/edit?usp=sharing) for more information.
 
 ```{r setup}
 library(tidyverse)
@@ -83,7 +54,12 @@ __q1__ Load Table `B01003` into the following tibble. Make sure the column names
 
 ```{r q1-task}
 ## TASK: Load the census bureau data with the following tibble name.
-df_pop <- NA
+filename <- "./data/ACSDT5Y2018.B01003_data_with_overlays_2020-07-27T003915.csv"
+
+## Load the data
+df_pop <-
+  read_csv(filename, skip = 2, na = '*****', col_names = c('id', 'name', 'population', 'errormargin'))
+df_pop
 ```
 
 *Note*: You can find information on 1-year, 3-year, and 5-year estimates [here](https://www.census.gov/programs-surveys/acs/guidance/estimates.html). The punchline is that 5-year estimates are more reliable but less current.
@@ -99,7 +75,7 @@ __q2__ Visit the NYT [GitHub](https://github.com/nytimes/covid-19-data) repo and
 
 ```{r q2-task}
 ## TASK: Find the URL for the NYT covid-19 county-level data
-url_counties <- NA_character_
+url_counties <- "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"
 ```
 
 Once you have the url, the following code will download a local copy of the data, then load the data into R.
@@ -142,7 +118,9 @@ __q3__ Process the `id` column of `df_pop` to create a `fips` column.
 
 ```{r q3-task}
 ## TASK: Create a `fips` column by extracting the county code
-df_q3 <- NA
+df_q3 <-
+  df_pop %>%
+  separate(id, sep = -5, into = c(NA, 'fips'))
 ```
 
 Use the following test to check your answer.
@@ -152,7 +130,7 @@ Use the following test to check your answer.
 ## Check known county
 assertthat::assert_that(
               (df_q3 %>%
-              filter(str_detect(`Geographic Area Name`, "Autauga County")) %>%
+              filter(str_detect(name, "Autauga County")) %>%
               pull(fips)) == "01001"
             )
 print("Very good!")
@@ -164,7 +142,9 @@ __q4__ Join `df_covid` with `df_q3` by the `fips` column. Use the proper type of
 
 ```{r q4-task}
 ## TASK: Join df_covid and df_q3 by fips.
-df_q4 <- NA
+df_q4 <- 
+  df_covid %>%
+  left_join(df_q3, by = 'fips')
 ```
 
 For convenience, I down-select some columns and produce more convenient column
@@ -181,8 +161,8 @@ df_data <-
     fips,
     cases,
     deaths,
-    population = `Estimate!!Total`
-  )
+    population )#= `Estimate!!Total`
+  #)
 ```
 
 # Analyze
@@ -198,7 +178,8 @@ __q5__ Use the `population` estimates in `df_data` to normalize `cases` and `dea
 ```{r q5-task}
 ## TASK: Normalize cases and deaths
 df_normalized <-
-  df_data
+  df_data %>%
+  mutate(cases_perk = cases / (population / 1e5), deaths_perk = deaths / (population / 1e5))
 ```
 
 You may use the following test to check your work.
@@ -235,19 +216,62 @@ __q6__ Compute the mean and standard deviation for `cases_perk` and `deaths_perk
 
 ```{r q6-task}
 ## TASK: Compute mean and sd for cases_perk and deaths_perk
+df_normalized %>%
+  #filter(date > as.Date('July 10 2020', format = "%B %d %Y")) %>%
+  summarize(
+    meancases = mean(cases_perk, na.rm = TRUE),
+    sdcases = sd(cases_perk, na.rm = TRUE),
+    meandeaths = mean(df_normalized$deaths_perk, na.rm = TRUE),
+    sddeaths = sd(deaths_perk, na.rm = TRUE)
+    )
+
+########## NOTE ########################
+# I'm confused about this. Aren't these cumulative case counts?
+# So why are meancases and meandeaths the same whether I look at the first month,
+# the last month, or the whole dataset?
+
 ```
 
 __q7__ Find the top 10 counties in terms of `cases_perk`, and the top 10 in terms of `deaths_perk`. Report the population of each county along with the per-100,000 counts. Compare the counts against the mean values you found in q6. Note any observations. Does New York City show up in the top? Why or why not?
 
 ```{r q7-task}
 ## TASK: Find the top 10 max cases_perk counties; report populations as well
+totals <-
+  df_normalized %>%
+  group_by(county, state, population) %>%
+  summarize(cases_perk = max(cases_perk), deaths_perk = max(deaths_perk)) %>%
+  ungroup()
+
+totals %>%
+  select(-deaths_perk) %>%
+  filter(rank(desc(cases_perk)) <= 10) %>%
+  arrange(desc(cases_perk)) %>%
+  knitr::kable(caption = 'Top 10 max cases_per_100K_pop counties')
 
 ## TASK: Find the top 10 deaths_perk counties; report populations as well
+totals %>%
+  select(-cases_perk) %>%
+  filter(rank(desc(deaths_perk)) <= 10) %>%
+  arrange(desc(deaths_perk)) %>%
+  knitr::kable(caption = 'Top 10 max deaths_per_100K_pop counties')
+
+df_normalized %>%
+  group_by(county, state, population) %>%
+  summarize(cases = max(cases), deaths = max(deaths)) %>%
+  arrange(desc(cases)) %>%
+  knitr::kable(caption = 'Top counties by raw case counts')
+
+df_data %>%
+  filter(is.na(population)) %>%
+  group_by(county, state) %>%
+  summarize() %>%
+  knitr::kable(caption = 'counties with NA population')
 ```
 
 **Observations**:
 
-- Note your observations here!
+New York doesn't show up in the top...because its population is NA, so its cases_perk is also NA.
+
 
 ## Self-directed EDA
 <!-- ------------------------- -->
