@@ -24,7 +24,14 @@ df_cellartracker <-
 df_cellartracker
 
 df_cellartracker %>%
-  separate(col = name, into = c('winename', 'loc'), sep = ', ', extra = 'merge')
+  separate(col = name, into = c('winename', 'loc'), sep = ', ', extra = 'merge') %>%
+  separate(col = loc, into = c('region', 'country'), sep = ', ', fill = 'left') %>%
+  mutate(
+    rating_100 = str_extract(avgrating, '^(\\d+)'),
+    price = as.integer(str_remove_all(price, '[\\$,]')),
+    searchrank = as.integer(str_remove_all(searchrank, '\\D')))
+
+
 
 ```
 
