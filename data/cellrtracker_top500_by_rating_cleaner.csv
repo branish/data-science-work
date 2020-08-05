@@ -1,0 +1,501 @@
+winename,region,country,vintage,searchrank,rating_100,price
+Chateau Margaux,Margaux,France,1900,4,100,18532
+Chateau Pavie,Saint-Emilion Grand Cru,France,2015,40,100,389
+Vega Sicilia Unico Gran Reserva,Ribera del Duero,Spain,1958,51,100,1306
+Salon Cuvee 'S' Le Mesnil Blanc de Blancs Brut,Champagne,France,1964,56,100,4927
+Chateau Lafleur,Pomerol,France,2018,79,100,1412
+Domaine de Montille Les Malconsorts Cuvee Christiane,Vosne-Romanee Premier Cru,France,2005,1830,100,1458
+Oremus Eszencia,Tokaj-Hegyalja,Hungary,1995,5702,100,756
+Weingut Donnhoff Niederhauser Hermannshohle Riesling Trockenbeerenauslese,Nahe,Germany,2010,24146,100,1006
+Seven of Hearts 'Curmudgeon Cuvee' Armstrong Vineyard Pinot Noir,Ribbon Ridge,USA,2012,30155,100,59
+Joh. Jos. Prum Bernkasteler Johannisbrunnchen Riesling Eiswein,Mosel,Germany,1990,76623,100,938
+Chateau Margaux,Margaux,France,2015,4,99,1772
+Chateau Haut-Brion,Pessac-Leognan,France,2016,9,99,752
+Chateau Haut-Brion,Pessac-Leognan,France,2015,9,99,671
+Chateau Leoville-Las Cases 'Grand Vin de Leoville',Saint-Julien,France,2016,22,99,331
+Chateau Lafleur,Pomerol,France,2017,79,99,917
+Chateau Lafleur,Pomerol,France,2016,79,99,1314
+Chateau Lafleur,Pomerol,France,1947,79,99,2562
+Chateau Ausone,Saint-Emilion Grand Cru,France,2015,84,99,981
+Paul Jaboulet Aine Hermitage La Chapelle,Rhone,France,1961,88,99,19111
+Chateau L'Eglise-Clinet,Pomerol,France,2015,154,99,300
+Domaine du Comte Liger-Belair La Romanee Grand Cru,Cote de Nuits,France,2009,257,99,6636
+Fonseca Vintage Port,NA,Portugal,1948,258,99,1564
+Pol Roger Vintage Brut,Champagne,France,1959,292,99,913
+Quinta do Noval Vintage Port,NA,Portugal,1931,375,99,5150
+Schrader Cellars 'Old Sparky' Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2013,839,99,673
+Domaine Marc Sorrel Hermitage Le Greal,Rhone,France,2017,1427,99,297
+MacDonald Vineyards Cabernet Sauvignon,Oakville,USA,2016,1684,99,525
+Clos Saint-Jean Chateauneuf-du-Pape Sanctus Sanctorum,Rhone,France,2010,3086,99,645
+Penfolds Bin 60A Coonawarra Cabernet Sauvignon - Barossa Shiraz,NA,South Australia,1962,3506,99,8679
+A.R. Valdespino Toneles Moscatel Sherry,Andalucia,Spain,NA,6958,99,354
+Hors Categorie,Walla Walla Valley,USA,2014,8596,99,417
+Carter Cellars Beckstoffer To Kalon Vineyard The G.T.O Cabernet Sauvignon,Napa Valley,USA,2015,8994,99,NA
+Carter Cellars 'La Verdad' Beckstoffer Las Piedras Vineyard Cabernet Sauvignon,Napa Valley,USA,2015,16458,99,363
+Sine Qua Non 'M' Syrah,Sta Rita Hills,USA,2015,18375,99,508
+Smith-Madrone Cook's Flat Reserve,Spring Mountain District,USA,2013,50408,99,219
+Chateau Mouton Rothschild,Pauillac,France,2016,2,98,770
+Chateau Lafite Rothschild,Pauillac,France,2018,3,98,757
+Chateau Margaux,Margaux,France,2009,4,98,1187
+Petrus,Pomerol,France,2016,5,98,4394
+Petrus,Pomerol,France,1989,5,98,4719
+Petrus,Pomerol,France,1962,5,98,4620
+Petrus,Pomerol,France,1928,5,98,3140
+Chateau Latour,Pauillac,France,2016,6,98,998
+Chateau Latour,Pauillac,France,2010,6,98,1665
+Chateau Latour,Pauillac,France,2009,6,98,1830
+Chateau Haut-Brion,Pessac-Leognan,France,1989,9,98,2380
+Chateau Haut-Brion,Pessac-Leognan,France,1929,9,98,3212
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,2010,10,98,22174
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,2006,10,98,21396
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,2002,10,98,20981
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,1990,10,98,26912
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,1978,10,98,19938
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,1971,10,98,17039
+Chateau d'Yquem,Sauternes,France,2015,12,98,402
+Chateau d'Yquem,Sauternes,France,2001,12,98,682
+Chateau d'Yquem,Sauternes,France,1937,12,98,5802
+Chateau Cheval Blanc,Saint-Emilion Grand Cru,France,2015,15,98,840
+Chateau Cheval Blanc,Saint-Emilion Grand Cru,France,1929,15,98,3500
+Domaine de la Romanee-Conti La Tache Grand Cru Monopole,Cote de Nuits,France,2010,18,98,5243
+Domaine de la Romanee-Conti La Tache Grand Cru Monopole,Cote de Nuits,France,2005,18,98,6322
+Domaine de la Romanee-Conti La Tache Grand Cru Monopole,Cote de Nuits,France,1999,18,98,6982
+Domaine de la Romanee-Conti La Tache Grand Cru Monopole,Cote de Nuits,France,1962,18,98,14784
+Domaine de la Romanee-Conti La Tache Grand Cru Monopole,Cote de Nuits,France,1943,18,98,3916
+Chateau Montrose,Saint-Estephe,France,2016,21,98,234
+Chateau Leoville-Las Cases 'Grand Vin de Leoville',Saint-Julien,France,2018,22,98,272
+Chateau Palmer,Margaux,France,2016,24,98,398
+Masseto Toscana IGT,Tuscany,Italy,2015,35,98,876
+Screaming Eagle Cabernet Sauvignon,Napa Valley,USA,2007,47,98,4164
+Vega Sicilia Unico Gran Reserva,Ribera del Duero,Spain,1948,51,98,1049
+Chateau Calon-Segur,Saint-Estephe,France,2018,55,98,144
+Chateau Calon-Segur,Saint-Estephe,France,1943,55,98,575
+Vieux Chateau Certan,Pomerol,France,2010,63,98,352
+Chateau Rauzan-Segla,Margaux,France,2018,66,98,135
+Chateau Lafleur,Pomerol,France,2012,79,98,567
+Chateau Lafleur,Pomerol,France,2000,79,98,1892
+Chateau Canon,Saint-Emilion Grand Cru,France,2018,83,98,143
+Chateau Ausone,Saint-Emilion Grand Cru,France,2016,84,98,925
+Chateau Ausone,Saint-Emilion Grand Cru,France,2005,84,98,1512
+Le Pin,Pomerol,France,1990,91,98,4620
+Taylor Fladgate Vintage Port,NA,Portugal,1927,107,98,1679
+Domaine de Chevalier,Pessac-Leognan,France,2018,114,98,79
+Krug Clos du Mesnil Blanc de Blancs Brut,Champagne,France,1979,157,98,4364
+Domaine de la Romanee-Conti Montrachet Grand Cru,Cote de Beaune,France,1986,158,98,10152
+Chateau Les Carmes Haut-Brion,Pessac-Leognan,France,2018,248,98,144
+Domaine du Comte Liger-Belair La Romanee Grand Cru,Cote de Nuits,France,2012,257,98,6424
+Coche-Dury Corton-Charlemagne Grand Cru,Cote de Beaune,France,2010,267,98,5890
+E. Guigal Cote Rotie La Landonne,Rhone,France,2015,269,98,418
+Tua Rita Redigaffi Toscana IGT,Tuscany,Italy,2000,322,98,658
+Vietti Rocche di Castiglione,Barolo DOCG,Italy,2016,379,98,280
+Quinta do Noval Nacional Vintage Port,NA,Portugal,2011,404,98,1817
+Quinta do Noval Nacional Vintage Port,NA,Portugal,1963,404,98,4941
+Clarendon Hills Astralis Shiraz,McLaren Vale,Australia,2000,420,98,207
+Don Julio 1942 Tequila Anejo,Jalisco,Mexico,NA,453,98,156
+Weingut Keller G-Max Riesling Trocken,Rheinhessen,Germany,2015,457,98,2283
+Weingut Keller G-Max Riesling Trocken,Rheinhessen,Germany,2004,457,98,5374
+Domaine du Pegau Chateauneuf-du-Pape Cuvee da Capo,Rhone,France,2016,463,98,364
+Domaine Leroy Richebourg Grand Cru,Cote de Nuits,France,1993,483,98,NA
+Henri Bonneau Chateauneuf-du-Pape Reserve des Celestins,Rhone,France,1990,548,98,2899
+Henri Jayer Cros Parantoux,Vosne-Romanee Premier Cru,France,2001,553,98,16384
+Bollinger Vieilles Vignes Francaises Blanc de Noirs,Champagne,France,1996,591,98,1606
+Domaine des Comtes Lafon Montrachet Grand Cru,Cote de Beaune,France,2014,650,98,2175
+Domaine Jean Grivot Richebourg Grand Cru,Cote de Nuits,France,2010,687,98,1750
+Domaine Jean Grivot Richebourg Grand Cru,Cote de Nuits,France,2005,687,98,2431
+Domaine Jacques-Frederic Mugnier Les Amoureuses,Chambolle-Musigny Premier Cru,France,2015,763,98,1889
+Schrader Cellars 'Old Sparky' Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2012,839,98,706
+Schrader Cellars 'Old Sparky' Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2008,839,98,850
+Schrader Cellars 'Old Sparky' Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2007,839,98,963
+Bond Vecina Napa Valley,NA,USA,2013,875,98,642
+Domaine Bruno Clair Chambertin-Clos de Beze Grand Cru,Cote de Nuits,France,2018,906,98,265
+Henri Jayer Echezeaux Grand Cru,Cote de Nuits,France,1990,929,98,10291
+Domaine Hubert Lignier Clos de la Roche Grand Cru,Cote de Nuits,France,2015,974,98,524
+Bond St Eden,Napa Valley,USA,2013,1199,98,680
+Tusk Estate Cabernet Sauvignon,Napa Valley,USA,2015,1201,98,845
+Tusk Estate Cabernet Sauvignon,Napa Valley,USA,2013,1201,98,942
+Tusk Estate Cabernet Sauvignon,Napa Valley,USA,2009,1201,98,717
+Clos Saint-Jean Deus-Ex Machina Chateauneuf-du-Pape,Rhone,France,2010,1210,98,313
+Torbreck The Laird,Barossa Valley,Australia,2008,1323,98,709
+Old Rip Van Winkle 'Pappy Van Winkle's Family Reserve' 13 Year Old Kentucky Straight Rye Whiskey,NA,USA,NA,1336,98,2025
+Maybach Family Vineyards Materium Cabernet Sauvignon,Oakville,USA,2014,1429,98,426
+Maybach Family Vineyards Materium Cabernet Sauvignon,Oakville,USA,2013,1429,98,440
+Vine Hill Ranch 'VHR' Cabernet Sauvignon,Napa Valley,USA,2016,1482,98,261
+Schrader Cellars CCS Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2007,1621,98,1318
+Domaine Leroy Corton-Charlemagne Grand Cru,Cote de Beaune,France,2001,1648,98,3902
+Sine Qua Non Cumulus Vineyard 'Next of Kyn',Central Coast,USA,2012,1780,98,503
+Bodegas Toro Albala Don PX Convento Seleccion,Montilla-Moriles,Spain,1946,1882,98,278
+W & J Graham's 'The Stone Terraces' Vintage Port,NA,Portugal,2017,1894,98,253
+Realm Cellars The Absurd Proprietary Red,Napa Valley,USA,2016,1942,98,753
+Realm Cellars The Absurd Proprietary Red,Napa Valley,USA,2012,1942,98,610
+Domaine La Barroche Chateauneuf-du-Pape Pure,Rhone,France,2016,1976,98,152
+Realm Cellars Beckstoffer Dr. Crane Vineyard Cabernet Sauvignon,St. Helena,USA,2016,2051,98,559
+Realm Cellars Beckstoffer Dr. Crane Vineyard Cabernet Sauvignon,St. Helena,USA,2015,2051,98,549
+Realm Cellars Beckstoffer Dr. Crane Vineyard Cabernet Sauvignon,St. Helena,USA,2014,2051,98,453
+Realm Cellars Beckstoffer Dr. Crane Vineyard Cabernet Sauvignon,St. Helena,USA,2012,2051,98,498
+Peter Michael 'Point Rouge' Chardonnay,Sonoma County,USA,2012,2120,98,473
+Colgin Cellars Tychson Hill Vineyard Cabernet Sauvignon,Napa Valley,USA,2007,2263,98,406
+Kapcsandy Family Winery State Lane Vineyard Roberta's Reserve,Napa Valley,USA,2013,2410,98,536
+Hundred Acre 'Few and Far Between' Cabernet Sauvignon,Napa Valley,USA,2013,2442,98,703
+Hundred Acre 'Few and Far Between' Cabernet Sauvignon,Napa Valley,USA,2012,2442,98,662
+Bruno Giacosa Collina Rionda,Barolo DOCG,Italy,1989,2857,98,4271
+Michel & Stephane Ogier Cote Rotie La Belle Helene,Rhone,France,1999,2890,98,747
+Henriot Cuvee des Enchanteleurs Brut,Champagne,France,1964,2904,98,1474
+Domaine Pierre Usseglio et Fils Chateauneuf-du-Pape Reserve des Deux Freres,Rhone,France,2016,3997,98,174
+Sine Qua Non The Gorgeous Victim,California,USA,2017,4198,98,334
+Weingut Keller Niersteiner Pettenthal Riesling Grosses Gewachs,Rheinhessen,Germany,2017,4232,98,1148
+Carter Cellars Beckstoffer To Kalon Vineyard The O.G. Cabernet Sauvignon,Napa Valley,USA,2016,4611,98,604
+Christopher Tynan Wines Meleagris Gallopavo Vineyard Cabernet Sauvignon,Napa Valley,USA,2014,6663,98,453
+Quilceda Creek Galitzine Vineyard Cabernet Sauvignon,Red Mountain,USA,2014,6715,98,252
+Odette Estate Reserve Cabernet Sauvignon,Stags Leap District,USA,2012,7084,98,566
+Weingut Donnhoff Oberhauser Brucke Riesling Eiswein,Nahe,Germany,2009,7911,98,424
+Weingut Donnhoff Oberhauser Brucke Riesling Eiswein,Nahe,Germany,2002,7911,98,980
+Hundred Acre 'Precious' Cabernet Sauvignon,Napa Valley,USA,2010,8396,98,538
+Hundred Acre 'Precious' Cabernet Sauvignon,Napa Valley,USA,2007,8396,98,637
+Gialdi Merlot Sassi Grossi,Ticino,Switzerland,2014,8707,98,62
+Cliff Lede Vineyards Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2016,8744,98,296
+Cliff Lede Vineyards Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2015,8744,98,313
+Sine Qua Non Stockholm Syndrome Eleven Confession Vineyard Syrah,Central Coast,USA,2010,9940,98,1053
+Russian River Brewing Company 'Pliny the Elder' Double IPA Beer,California,USA,NA,10997,98,9
+Markus Molitor Zeltinger Sonnenuhr Riesling Trockenbeerenauslese,Mosel,Germany,2010,11591,98,853
+Fairchild Estate Stones No. 1,Napa Valley,USA,2015,12235,98,500
+Sine Qua Non Touche Syrah,California,USA,2012,12654,98,675
+Philippe Foreau Domaine du Clos Naudin Vouvray Moelleux 'Goutte d'Or',Loire,France,2011,12737,98,252
+Domaine de la Mordoree Chateauneuf-du-Pape La Plume du Peintre,Rhone,France,2005,14108,98,582
+Paul Hobbs Cuvee Agustina Richard Dinner Vineyard Chardonnay,Sonoma Mountain,USA,2015,14304,98,72
+Domaine Roulot L'Abricot du Roulot - Apricot Liqueur,NA,France,NA,15335,98,88
+Purlieu Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2016,17098,98,229
+Bruno Giacosa Vigneto Montefico,Barbaresco DOCG,Italy,1971,42040,98,627
+Massandra Ai-Danil,NA,Crimea,1931,74313,98,875
+Forstmeister Geltz-Zilliken Saarburger Rausch Riesling Beerenauslese,Mosel,Germany,2005,97163,98,295
+Quinta do Mourao 'S. Leonardo' 60 Year Old Tawny Port,NA,Portugal,NA,120688,98,727
+Chateau Mouton Rothschild,Pauillac,France,2017,2,97,521
+Chateau Mouton Rothschild,Pauillac,France,2010,2,97,1125
+Chateau Mouton Rothschild,Pauillac,France,2009,2,97,1083
+Chateau Mouton Rothschild,Pauillac,France,1982,2,97,1618
+Chateau Mouton Rothschild,Pauillac,France,1949,2,97,4424
+Chateau Mouton Rothschild,Pauillac,France,1945,2,97,16929
+Chateau Lafite Rothschild,Pauillac,France,2016,3,97,825
+Chateau Lafite Rothschild,Pauillac,France,2010,3,97,1234
+Chateau Lafite Rothschild,Pauillac,France,2009,3,97,1201
+Chateau Margaux,Margaux,France,2016,4,97,761
+Chateau Margaux,Margaux,France,2010,4,97,1117
+Chateau Margaux,Margaux,France,2005,4,97,1044
+Chateau Margaux,Margaux,France,2000,4,97,1189
+Chateau Margaux,Margaux,France,1990,4,97,1324
+Petrus,Pomerol,France,2012,5,97,3022
+Petrus,Pomerol,France,2010,5,97,4191
+Petrus,Pomerol,France,2009,5,97,4100
+Petrus,Pomerol,France,2008,5,97,3043
+Petrus,Pomerol,France,2000,5,97,5346
+Petrus,Pomerol,France,1998,5,97,3891
+Petrus,Pomerol,France,1990,5,97,5140
+Petrus,Pomerol,France,1955,5,97,3272
+Petrus,Pomerol,France,1953,5,97,3913
+Chateau Latour,Pauillac,France,2005,6,97,1085
+Chateau Latour,Pauillac,France,2003,6,97,1022
+Chateau Latour,Pauillac,France,1982,6,97,2330
+Chateau Latour,Pauillac,France,1961,6,97,4594
+Chateau Haut-Brion,Pessac-Leognan,France,2009,9,97,1015
+Chateau Haut-Brion,Pessac-Leognan,France,1959,9,97,2476
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,2016,10,97,21312
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,2015,10,97,22981
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,2014,10,97,18312
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,2009,10,97,21161
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,2001,10,97,20403
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,2000,10,97,20987
+Domaine de la Romanee-Conti Romanee-Conti Grand Cru,Cote de Nuits,France,1959,10,97,20402
+Chateau d'Yquem,Sauternes,France,2013,12,97,371
+Chateau d'Yquem,Sauternes,France,1975,12,97,1007
+Chateau d'Yquem,Sauternes,France,1967,12,97,1645
+Chateau d'Yquem,Sauternes,France,1948,12,97,2564
+Chateau Cheval Blanc,Saint-Emilion Grand Cru,France,2018,15,97,739
+Chateau Cheval Blanc,Saint-Emilion Grand Cru,France,2010,15,97,1216
+Chateau Cheval Blanc,Saint-Emilion Grand Cru,France,2009,15,97,1251
+Chateau Cheval Blanc,Saint-Emilion Grand Cru,France,2000,15,97,1044
+Chateau Cheval Blanc,Saint-Emilion Grand Cru,France,1990,15,97,1279
+Chateau Cheval Blanc,Saint-Emilion Grand Cru,France,1947,15,97,10824
+Domaine de la Romanee-Conti La Tache Grand Cru Monopole,Cote de Nuits,France,2016,18,97,5176
+Domaine de la Romanee-Conti La Tache Grand Cru Monopole,Cote de Nuits,France,2015,18,97,5887
+Domaine de la Romanee-Conti La Tache Grand Cru Monopole,Cote de Nuits,France,2012,18,97,4307
+Domaine de la Romanee-Conti La Tache Grand Cru Monopole,Cote de Nuits,France,2009,18,97,5418
+Domaine de la Romanee-Conti La Tache Grand Cru Monopole,Cote de Nuits,France,2008,18,97,4399
+Domaine de la Romanee-Conti La Tache Grand Cru Monopole,Cote de Nuits,France,1990,18,97,7316
+Chateau Cos d'Estournel,Saint-Estephe,France,2018,19,97,203
+Chateau Cos d'Estournel,Saint-Estephe,France,2016,19,97,242
+Penfolds Grange Bin 95,NA,Australia,2010,20,97,633
+Penfolds Grange Bin 95,NA,Australia,1962,20,97,3050
+Chateau Montrose,Saint-Estephe,France,1990,21,97,684
+Chateau Pichon Longueville Comtesse de Lalande,Pauillac,France,2018,23,97,193
+Chateau Palmer,Margaux,France,2015,24,97,388
+Chateau Palmer,Margaux,France,1928,24,97,496
+Chateau La Mission Haut-Brion,Pessac-Leognan,France,2016,27,97,546
+Chateau La Mission Haut-Brion,Pessac-Leognan,France,2005,27,97,625
+Chateau La Mission Haut-Brion,Pessac-Leognan,France,1989,27,97,1539
+Chateau La Mission Haut-Brion,Pessac-Leognan,France,1955,27,97,2951
+Chateau La Mission Haut-Brion,Pessac-Leognan,France,1949,27,97,3629
+Chateau La Mission Haut-Brion,Pessac-Leognan,France,1945,27,97,5301
+Chateau Ducru-Beaucaillou,Saint-Julien,France,2016,29,97,257
+Chateau Pichon-Longueville au Baron de Pichon-Longueville,Pauillac,France,2018,30,97,164
+Chateau Angelus,Saint-Emilion Grand Cru,France,2015,33,97,398
+Chateau Angelus,Saint-Emilion Grand Cru,France,1961,33,97,770
+Masseto Toscana IGT,Tuscany,Italy,2010,35,97,878
+Screaming Eagle Cabernet Sauvignon,Napa Valley,USA,2013,47,97,3416
+Screaming Eagle Cabernet Sauvignon,Napa Valley,USA,2012,47,97,3748
+Screaming Eagle Cabernet Sauvignon,Napa Valley,USA,2010,47,97,3860
+Screaming Eagle Cabernet Sauvignon,Napa Valley,USA,2005,47,97,4019
+Krug Vintage Brut,Champagne,France,1966,50,97,1154
+Vega Sicilia Unico Gran Reserva,Ribera del Duero,Spain,1968,51,97,1911
+Vega Sicilia Unico Gran Reserva,Ribera del Duero,Spain,1961,51,97,730
+Vega Sicilia Unico Gran Reserva,Ribera del Duero,Spain,1959,51,97,804
+Marchesi Antinori Solaia Toscana IGT,Tuscany,Italy,2015,54,97,368
+Salon Cuvee 'S' Le Mesnil Blanc de Blancs Brut,Champagne,France,1971,56,97,4039
+Harlan Estate,Napa Valley,USA,2002,60,97,1468
+Harlan Estate,Napa Valley,USA,2001,60,97,1279
+Harlan Estate,Napa Valley,USA,1994,60,97,1372
+Domaine de la Romanee-Conti Romanee-Saint-Vivant Grand Cru,Cote de Nuits,France,2010,62,97,2748
+Domaine de la Romanee-Conti Romanee-Saint-Vivant Grand Cru,Cote de Nuits,France,1982,62,97,1999
+Vieux Chateau Certan,Pomerol,France,2016,63,97,363
+Vieux Chateau Certan,Pomerol,France,2015,63,97,334
+Vieux Chateau Certan,Pomerol,France,2009,63,97,321
+Domaine de la Romanee-Conti Richebourg Grand Cru,Cote de Nuits,France,2015,72,97,3960
+Chateau Lafleur,Pomerol,France,2010,79,97,1635
+Chateau Lafleur,Pomerol,France,2009,79,97,1512
+Chateau Lafleur,Pomerol,France,2005,79,97,1889
+Chateau Lafleur,Pomerol,France,1982,79,97,5511
+Domaine de la Romanee-Conti Echezeaux Grand Cru,Cote de Nuits,France,1964,82,97,1471
+Chateau Ausone,Saint-Emilion Grand Cru,France,2008,84,97,723
+Chateau Ausone,Saint-Emilion Grand Cru,France,2003,84,97,1125
+Chateau Ausone,Saint-Emilion Grand Cru,France,2000,84,97,1512
+Le Pin,Pomerol,France,2004,91,97,2887
+Domaine Comte Georges de Vogue Musigny Grand Cru 'Cuvee Vieilles Vignes',Cote de Nuits,France,1971,111,97,2938
+Domaine Comte Georges de Vogue Musigny Grand Cru 'Cuvee Vieilles Vignes',Cote de Nuits,France,1947,111,97,3770
+Shafer Vineyards Hillside Select Cabernet Sauvignon,Stags Leap District,USA,2002,115,97,527
+Chateau Trotanoy,Pomerol,France,2018,144,97,318
+Chateau Trotanoy,Pomerol,France,2016,144,97,327
+Chateau L'Eglise-Clinet,Pomerol,France,2010,154,97,428
+Chateau L'Eglise-Clinet,Pomerol,France,2009,154,97,464
+Chateau L'Eglise-Clinet,Pomerol,France,2005,154,97,532
+Krug Clos du Mesnil Blanc de Blancs Brut,Champagne,France,2002,157,97,1271
+Krug Clos du Mesnil Blanc de Blancs Brut,Champagne,France,1985,157,97,2283
+Domaine de la Romanee-Conti Montrachet Grand Cru,Cote de Beaune,France,2010,158,97,8817
+Domaine de la Romanee-Conti Montrachet Grand Cru,Cote de Beaune,France,2008,158,97,8185
+Domaine de la Romanee-Conti Montrachet Grand Cru,Cote de Beaune,France,2005,158,97,9111
+Domaine de la Romanee-Conti Montrachet Grand Cru,Cote de Beaune,France,2001,158,97,7259
+Chateau Pavie Macquin,Saint-Emilion Grand Cru,France,2018,168,97,79
+Dominio de Pingus 'Pingus',Ribera del Duero,Spain,2009,170,97,842
+Scarecrow Cabernet Sauvignon,Rutherford,USA,2014,189,97,872
+Scarecrow Cabernet Sauvignon,Rutherford,USA,2013,189,97,907
+Scarecrow Cabernet Sauvignon,Rutherford,USA,2012,189,97,686
+Scarecrow Cabernet Sauvignon,Rutherford,USA,2007,189,97,1056
+Domaine Armand Rousseau Pere et Fils Chambertin Clos-de-Beze Grand Cru,Cote de Nuits,France,2010,191,97,4518
+Domaine Leroy Musigny Grand Cru,Cote de Nuits,France,1992,222,97,16773
+Louis Roederer Cristal Brut Rose Millesime,Champagne,France,1996,226,97,1070
+Case Basse di Gianfranco Soldera Toscana IGT - Brunello di Montalcino DOCG,Tuscany,Italy,2013,235,97,549
+La Rioja Alta S.A. Vina Ardanza Reserva,Rioja DOCa,Spain,1964,236,97,216
+Dom Perignon P3 Plenitude Brut,Champagne,France,1985,237,97,2248
+Dom Perignon P3 Plenitude Brut,Champagne,France,1969,237,97,3999
+Henschke Hill of Grace Shiraz,Eden Valley,Australia,2006,238,97,782
+E. Guigal Cote Rotie La Mouline,Rhone,France,2015,245,97,405
+E. Guigal Cote Rotie La Mouline,Rhone,France,1999,245,97,738
+E. Guigal Cote Rotie La Mouline,Rhone,France,1991,245,97,798
+E. Guigal Cote Rotie La Mouline,Rhone,France,1990,245,97,914
+E. Guigal Cote Rotie La Mouline,Rhone,France,1988,245,97,931
+E. Guigal Cote Rotie La Mouline,Rhone,France,1985,245,97,2519
+E. Guigal Cote Rotie La Mouline,Rhone,France,1983,245,97,853
+Chateau Le Tertre-Roteboeuf,Saint-Emilion Grand Cru,France,2016,254,97,237
+Chateau Le Tertre-Roteboeuf,Saint-Emilion Grand Cru,France,2010,254,97,263
+Dom Perignon Oenotheque Brut Millesime,Champagne,France,1969,255,97,2430
+Coche-Dury Corton-Charlemagne Grand Cru,Cote de Beaune,France,2008,267,97,5164
+Coche-Dury Corton-Charlemagne Grand Cru,Cote de Beaune,France,2005,267,97,5832
+Coche-Dury Corton-Charlemagne Grand Cru,Cote de Beaune,France,2000,267,97,5138
+Coche-Dury Corton-Charlemagne Grand Cru,Cote de Beaune,France,1999,267,97,5918
+Coche-Dury Corton-Charlemagne Grand Cru,Cote de Beaune,France,1995,267,97,5423
+E. Guigal Cote Rotie La Landonne,Rhone,France,2003,269,97,663
+E. Guigal Cote Rotie La Landonne,Rhone,France,1999,269,97,659
+E. Guigal Cote Rotie La Landonne,Rhone,France,1998,269,97,532
+Spottswoode Family Estate Grown Cabernet Sauvignon,St. Helena,USA,2016,271,97,238
+E. Guigal Cote Rotie La Turque,Rhone,France,2015,297,97,413
+E. Guigal Cote Rotie La Turque,Rhone,France,1999,297,97,688
+E. Guigal Cote Rotie La Turque,Rhone,France,1988,297,97,872
+E. Guigal Cote Rotie La Turque,Rhone,France,1985,297,97,1721
+Duffau-Lagarrosse Chateau Beausejour,Saint-Emilion Grand Cru,France,2016,298,97,144
+Duffau-Lagarrosse Chateau Beausejour,Saint-Emilion Grand Cru,France,1990,298,97,1002
+Heitz Cellar Martha's Vineyard Cabernet Sauvignon,Napa Valley,USA,1968,299,97,1319
+Chateau de Beaucastel Chateauneuf-du-Pape Grand Cuvee Hommage a Jacques Perrin,Rhone,France,2010,315,97,453
+Chateau de Beaucastel Chateauneuf-du-Pape Grand Cuvee Hommage a Jacques Perrin,Rhone,France,2007,315,97,548
+Chateau de Beaucastel Chateauneuf-du-Pape Grand Cuvee Hommage a Jacques Perrin,Rhone,France,1990,315,97,994
+Chateau de Beaucastel Chateauneuf-du-Pape Grand Cuvee Hommage a Jacques Perrin,Rhone,France,1989,315,97,1040
+Chateau Haut-Brion Blanc,Pessac-Leognan,France,2013,335,97,972
+Chateau Haut-Brion Blanc,Pessac-Leognan,France,2010,335,97,1115
+Chateau Haut-Brion Blanc,Pessac-Leognan,France,2009,335,97,1161
+Sylvain Cathiard Aux Malconsorts,Vosne-Romanee Premier Cru,France,2017,372,97,770
+Quinta do Noval Vintage Port,NA,Portugal,2017,375,97,106
+Colgin Cellars IX Estate Red,Napa Valley,USA,2010,376,97,494
+Colgin Cellars IX Estate Red,Napa Valley,USA,2002,376,97,655
+Domaine Ramonet Montrachet Grand Cru,Cote de Beaune,France,2010,382,97,3194
+Domaine Ramonet Montrachet Grand Cru,Cote de Beaune,France,2009,382,97,2245
+Domaine Ramonet Montrachet Grand Cru,Cote de Beaune,France,1988,382,97,5198
+Domaine Leroy Chambertin Grand Cru,Cote de Nuits,France,2000,396,97,15728
+Quinta do Noval Nacional Vintage Port,NA,Portugal,2000,404,97,1196
+Quinta do Noval Nacional Vintage Port,NA,Portugal,1997,404,97,1708
+Chateau Latour a Pomerol,Pomerol,France,1961,415,97,6072
+Emmanuel Rouget Cros Parantoux,Vosne-Romanee Premier Cru,France,2009,440,97,2252
+Weingut Keller G-Max Riesling Trocken,Rheinhessen,Germany,2017,457,97,2108
+Weingut Keller G-Max Riesling Trocken,Rheinhessen,Germany,2010,457,97,2395
+Domaine du Pegau Chateauneuf-du-Pape Cuvee da Capo,Rhone,France,2003,463,97,663
+Domaine Leroy Richebourg Grand Cru,Cote de Nuits,France,2007,483,97,5104
+Gaja Sori Tildin Langhe-Barbaresco,Piedmont,Italy,2013,505,97,422
+Hundred Acre 'Ark Vineyard' Cabernet Sauvignon,Howell Mountain,USA,2014,513,97,496
+Hundred Acre 'Ark Vineyard' Cabernet Sauvignon,Howell Mountain,USA,2013,513,97,517
+Hundred Acre 'Ark Vineyard' Cabernet Sauvignon,Howell Mountain,USA,2012,513,97,464
+Hundred Acre 'Ark Vineyard' Cabernet Sauvignon,Howell Mountain,USA,2007,513,97,641
+M. Chapoutier Ermitage l'Ermite,Rhone,France,2012,518,97,398
+Promontory,Napa Valley,USA,2014,524,97,838
+Comte Armand Clos des Epeneaux Monopole,Pommard Premier Cru,France,1978,534,97,1116
+Henri Jayer Cros Parantoux,Vosne-Romanee Premier Cru,France,1993,553,97,17962
+Henri Jayer Cros Parantoux,Vosne-Romanee Premier Cru,France,1991,553,97,13443
+Krug Collection Brut,Champagne,France,1988,566,97,969
+Pavillon Blanc du Chateau Margaux,Bordeaux,France,1989,570,97,NA
+Bollinger Vieilles Vignes Francaises Blanc de Noirs,Champagne,France,2005,591,97,762
+Bollinger Vieilles Vignes Francaises Blanc de Noirs,Champagne,France,1992,591,97,1719
+Bollinger Vieilles Vignes Francaises Blanc de Noirs,Champagne,France,1990,591,97,1910
+Vietti Ravera,Barolo DOCG,Italy,2010,606,97,392
+Bryant Family Vineyard Cabernet Sauvignon,Napa Valley,USA,2013,639,97,781
+Bryant Family Vineyard Cabernet Sauvignon,Napa Valley,USA,1997,639,97,1005
+Meo-Camuzet Richebourg Grand Cru,Cote de Nuits,France,2005,649,97,3545
+Meo-Camuzet Richebourg Grand Cru,Cote de Nuits,France,2002,649,97,2636
+Domaine des Comtes Lafon Montrachet Grand Cru,Cote de Beaune,France,2010,650,97,2252
+Domaine Leroy Romanee-Saint-Vivant Grand Cru,Cote de Nuits,France,2006,670,97,5907
+Domaine Comte Georges de Vogue Les Amoureuses,Chambolle-Musigny Premier Cru,France,2010,679,97,1011
+Hundred Acre 'Kayli Morgan Vineyard' Cabernet Sauvignon,Napa Valley,USA,2015,754,97,528
+Hundred Acre 'Kayli Morgan Vineyard' Cabernet Sauvignon,Napa Valley,USA,2007,754,97,723
+Il Marroneto Madonna delle Grazie,Brunello di Montalcino DOCG,Italy,2010,759,97,515
+Taylor Fladgate Very Old Single Harvest Port,NA,Portugal,1863,822,97,3287
+Schrader Cellars 'Old Sparky' Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2010,839,97,582
+Schrader Cellars 'Old Sparky' Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2009,839,97,648
+Schrader Cellars 'Old Sparky' Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2006,839,97,845
+Bond Vecina Napa Valley,NA,USA,2007,875,97,578
+Falletto di Bruno Giacosa Asili Riserva,Barbaresco DOCG,Italy,1990,884,97,1001
+Chateau La Violette,Pomerol,France,2010,899,97,1347
+Chateau La Violette,Pomerol,France,2009,899,97,697
+Cockburn's Vintage Port,NA,Portugal,1927,917,97,1310
+Cerbaiona di Diego Molinari Brunello di Montalcino DOCG,Tuscany,Italy,2010,937,97,499
+Abreu Vineyard Madrona Ranch Cabernet Sauvignon,Napa Valley,USA,2002,955,97,779
+Leroy Domaine d'Auvenay Chevalier-Montrachet Grand Cru,Cote de Beaune,France,2002,979,97,7484
+Giuseppe Quintarelli 'Alzero' Cabernet Veneto IGT,NA,Italy,1993,986,97,884
+Joseph Drouhin Musigny Grand Cru,Cote de Nuits,France,1979,999,97,1965
+Marchesi Antinori Villa Antinori Riserva,Chianti Classico DOCG,Italy,1977,1020,97,34
+Chappellet Pritchard Hill Cabernet Sauvignon,Napa Valley,USA,2016,1027,97,272
+Clos i Terrasses Clos Erasmus,Priorat DOCa,Spain,2013,1032,97,734
+Clos i Terrasses Clos Erasmus,Priorat DOCa,Spain,2012,1032,97,265
+Clos i Terrasses Clos Erasmus,Priorat DOCa,Spain,2004,1032,97,1615
+Bruno Giacosa Albesani Santo Stefano,Barbaresco DOCG,Italy,1989,1145,97,3474
+Bruno Giacosa Albesani Santo Stefano,Barbaresco DOCG,Italy,1964,1145,97,3799
+Domaine Bruno Clair Clos-Saint-Jacques,Gevrey-Chambertin Premier Cru,France,2018,1179,97,244
+Tusk Estate Cabernet Sauvignon,Napa Valley,USA,2014,1201,97,886
+Tusk Estate Cabernet Sauvignon,Napa Valley,USA,2011,1201,97,827
+Tusk Estate Cabernet Sauvignon,Napa Valley,USA,2010,1201,97,883
+Tusk Estate Cabernet Sauvignon,Napa Valley,USA,2008,1201,97,841
+Colgin Cellars Cariad Red,Napa Valley,USA,2014,1270,97,538
+Colgin Cellars Cariad Red,Napa Valley,USA,2010,1270,97,587
+Torbreck The Laird,Barossa Valley,Australia,2012,1323,97,642
+Torbreck The Laird,Barossa Valley,Australia,2005,1323,97,693
+E. Guigal Ermitage Ex-Voto,Rhone,France,2009,1327,97,324
+Schrader Cellars RBS Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2006,1378,97,538
+Paul Hobbs Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Oakville,USA,2002,1385,97,700
+Maybach Family Vineyards Materium Cabernet Sauvignon,Oakville,USA,2016,1429,97,341
+Maybach Family Vineyards Materium Cabernet Sauvignon,Oakville,USA,2015,1429,97,401
+Le Clos du Caillou Chateauneuf-du-Pape La Reserve,Rhone,France,2016,1563,97,203
+Le Clos du Caillou Chateauneuf-du-Pape La Reserve,Rhone,France,2010,1563,97,208
+Kavalan Solist Vinho Barrique Cask Strength Single Malt Whisky,NA,Taiwan,NA,1578,97,238
+Dana Estates Lotus Vineyard Cabernet Sauvignon,Napa Valley,USA,2013,1596,97,588
+Schrader Cellars CCS Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2013,1621,97,563
+Schrader Cellars CCS Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2012,1621,97,630
+Schrader Cellars CCS Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2008,1621,97,765
+Schrader Cellars CCS Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2006,1621,97,819
+Kapcsandy Family Winery State Lane Vineyard Grand-Vin Cabernet Sauvignon,Napa Valley,USA,2012,1652,97,542
+Kapcsandy Family Winery State Lane Vineyard Grand-Vin Cabernet Sauvignon,Napa Valley,USA,2010,1652,97,451
+Kapcsandy Family Winery State Lane Vineyard Grand-Vin Cabernet Sauvignon,Napa Valley,USA,2008,1652,97,490
+Domaine des Comtes Lafon Genevrieres,Meursault Premier Cru,France,1992,1664,97,656
+MacDonald Vineyards Cabernet Sauvignon,Oakville,USA,2015,1684,97,514
+MacDonald Vineyards Cabernet Sauvignon,Oakville,USA,2012,1684,97,647
+Blandy's Vintage Bual,Madeira,Portugal,1920,1712,97,924
+Abreu Vineyard 'Thorevilos' Cabernet Sauvignon,Napa Valley,USA,2014,1727,97,637
+Abreu Vineyard 'Thorevilos' Cabernet Sauvignon,Napa Valley,USA,2010,1727,97,574
+Abreu Vineyard 'Thorevilos' Cabernet Sauvignon,Napa Valley,USA,2007,1727,97,840
+Abreu Vineyard 'Thorevilos' Cabernet Sauvignon,Napa Valley,USA,2002,1727,97,921
+Sine Qua Non Cumulus Vineyard 'Next of Kyn',Central Coast,USA,2013,1780,97,441
+Sine Qua Non Cumulus Vineyard 'Next of Kyn',Central Coast,USA,2010,1780,97,664
+Bodegas Toro Albala Don PX Convento Seleccion,Montilla-Moriles,Spain,1931,1882,97,280
+W & J Graham's 'The Stone Terraces' Vintage Port,NA,Portugal,2016,1894,97,291
+Realm Cellars The Absurd Proprietary Red,Napa Valley,USA,2015,1942,97,734
+Realm Cellars The Absurd Proprietary Red,Napa Valley,USA,2014,1942,97,719
+Realm Cellars The Absurd Proprietary Red,Napa Valley,USA,2013,1942,97,968
+Leroy Domaine d'Auvenay Les Folatieres,Puligny-Montrachet Premier Cru,France,2004,2003,97,2967
+Realm Cellars Beckstoffer Dr. Crane Vineyard Cabernet Sauvignon,St. Helena,USA,2013,2051,97,645
+Domaine Leroy Corton-Renardes Grand Cru,Cote de Beaune,France,2009,2090,97,5482
+Bond Quella,Napa Valley,USA,2013,2196,97,553
+Hundred Acre 'Wraith' Cabernet Sauvignon,Napa Valley,USA,2013,2237,97,587
+Colgin Cellars IX Estate Syrah,Napa Valley,USA,2013,2288,97,354
+Seppeltsfield Para Vintage Tawny,Barossa Valley,Australia,1915,2332,97,3574
+Seppeltsfield Para Vintage Tawny,Barossa Valley,Australia,1914,2332,97,3767
+Kapcsandy Family Winery State Lane Vineyard Roberta's Reserve,Napa Valley,USA,2008,2410,97,434
+Kapcsandy Family Winery State Lane Vineyard Roberta's Reserve,Napa Valley,USA,2007,2410,97,362
+Hundred Acre 'Few and Far Between' Cabernet Sauvignon,Napa Valley,USA,2010,2442,97,732
+Schrader Cellars Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2012,2471,97,495
+Schrader Cellars Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2007,2471,97,536
+Marques de Murrieta Castillo Ygay Blanco Gran Reserva Especial,Rioja DOCa,Spain,1986,2645,97,542
+Sine Qua Non The Hated Hunter,California,USA,2017,2670,97,331
+Denis Dubourdieu Chateau Doisy-Daene L'Extravagant de Doisy-Daene,Sauternes,France,2001,2781,97,495
+Michel & Stephane Ogier Cote Rotie La Belle Helene,Rhone,France,2010,2890,97,466
+Futo Estate Red,Oakville,USA,2012,2913,97,402
+Realm Cellars Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Oakville,USA,2015,3035,97,430
+Realm Cellars Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Oakville,USA,2014,3035,97,359
+Clos Saint-Jean Chateauneuf-du-Pape Sanctus Sanctorum,Rhone,France,2009,3086,97,571
+Clos Saint-Jean Chateauneuf-du-Pape Sanctus Sanctorum,Rhone,France,2007,3086,97,1061
+Domaine de la Vieille Julienne Chateauneuf-du-Pape Reserve,Rhone,France,2010,3211,97,244
+Avignonesi Occhio di Pernice Vin Santo di Montepulciano,Tuscany,Italy,2001,3477,97,524
+Avignonesi Occhio di Pernice Vin Santo di Montepulciano,Tuscany,Italy,1999,3477,97,523
+Outpost 'True Vineyard' Cabernet Sauvignon,Howell Mountain,USA,2014,3549,97,413
+Outpost 'True Vineyard' Cabernet Sauvignon,Howell Mountain,USA,2013,3549,97,270
+Morlet Family Vineyards Passionement Cabernet Sauvignon,Oakville,USA,2013,3645,97,250
+Bevan Cellars 'EE - Double E' Red,Oakville,USA,2015,3703,97,253
+Weingut Keller Niersteiner Pettenthal Riesling Grosses Gewachs,Rheinhessen,Germany,2016,4232,97,371
+Schrader Cellars T6 Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2013,4319,97,405
+Schrader Cellars T6 Beckstoffer To Kalon Vineyard Cabernet Sauvignon,Napa Valley,USA,2008,4319,97,479
+Immortal Estate Impassable Mountain Reserve Cabernet Sauvignon,Sonoma County,USA,2013,4363,97,368
+Abreu Vineyard Cappella Proprietary Red,Napa Valley,USA,2012,4581,97,521
+Carter Cellars Beckstoffer To Kalon Vineyard The O.G. Cabernet Sauvignon,Napa Valley,USA,2015,4611,97,275
+D'Oliveiras Malvasia Reserva Vintage Madeira,NA,Portugal,1900,4636,97,1841
+Avignonesi Vin Santo di Montepulciano,Tuscany,Italy,1990,4979,97,455
+Domaine Giraud Chateauneuf-du-Pape Grenaches de Pierre,Rhone,France,2010,5119,97,189
+M. Chapoutier Ermitage Vin de Paille,Rhone,France,2009,5548,97,292
+Egon Muller Wiltingen Scharzhofberger Riesling Auslese Goldkapsel,Mosel,Germany,2005,5584,97,1011
+Egon Muller Wiltingen Scharzhofberger Riesling Auslese Goldkapsel,Mosel,Germany,1994,5584,97,2323
+Cantina Terlano-Kellerei Terlan 'Rarity' Alto Adige,Trentino-Alto Adige,Italy,1991,5626,97,386
+Comando G Las Umbrias,Madrid,Spain,2015,5898,97,83
+Domaine Fontaine-Gagnard Montrachet Grand Cru,Cote de Beaune,France,2008,6036,97,407
+Myriad Cellars Beckstoffer Dr. Crane Vineyard 'Elysian' Reserve Cabernet Sauvignon,Napa Valley,USA,2017,6323,97,291
+Myriad Cellars Beckstoffer Dr. Crane Vineyard 'Elysian' Reserve Cabernet Sauvignon,Napa Valley,USA,2016,6323,97,415
+Myriad Cellars Beckstoffer Dr. Crane Vineyard 'Elysian' Reserve Cabernet Sauvignon,Napa Valley,USA,2015,6323,97,270
+Myriad Cellars Beckstoffer Dr. Crane Vineyard 'Elysian' Reserve Cabernet Sauvignon,Napa Valley,USA,2013,6323,97,414
+Myriad Cellars Beckstoffer Dr. Crane Vineyard 'Elysian' Reserve Cabernet Sauvignon,Napa Valley,USA,2012,6323,97,342
+Alban Vineyards Pandora Red,Edna Valley,USA,2012,6423,97,367
+Domaine Louis Carillon et Fils Bienvenues-Batard-Montrachet Grand Cru,Cote de Beaune,France,2001,6663,97,NA
+Greer Cabernet Sauvignon,Napa Valley,USA,2016,7112,97,225
+Alban Vineyards Lorraine Estate Syrah,Edna Valley,USA,2012,7112,97,225
+Frank Family Vineyards Winston Hill Red,Rutherford,USA,2015,7140,97,200
+Hundred Acre 'Deep Time' Cabernet Sauvignon,Napa Valley,USA,2005,7757,97,472
+Weingut Donnhoff Oberhauser Brucke Riesling Eiswein,Nahe,Germany,2010,7911,97,440
+Weingut Donnhoff Oberhauser Brucke Riesling Eiswein,Nahe,Germany,2008,7911,97,377
+Weingut Donnhoff Oberhauser Brucke Riesling Eiswein,Nahe,Germany,1998,7911,97,850
+Andremily Wines Mourvedre,Santa Barbara County,USA,2017,7939,97,144
+Morlet Family Vineyards Estate Cabernet Sauvignon,St Helena - Napa Valley,USA,2013,7939,97,203
+Buccella Cuvee Katrina Eileen Cabernet Sauvignon,Napa Valley,USA,2013,8035,97,329
+Sine Qua Non 'E' Grenache,Sta Rita Hills,USA,2015,8918,97,521
+Lokoya Winery Cabernet Sauvignon,Diamond Mountain District,USA,2007,9309,97,398
+Bodegas Toro Albala Don PX,Montilla-Moriles,Spain,1961,9661,97,177
+Chimere Chateauneuf-du-Pape,Rhone,France,2010,10193,97,992
+Weingut Wittmann 'La Borne' Alte Reben Riesling,Rheinhessen,Germany,2015,10298,97,199
+Bevan Cellars Tin Box Vineyard Red,Oakville,USA,2013,10706,97,322
+Bevan Cellars Tin Box Vineyard Red,Oakville,USA,2012,10706,97,274
