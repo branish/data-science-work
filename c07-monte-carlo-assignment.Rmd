@@ -108,15 +108,25 @@ __q1__ Pick a sample size $n$ and generate $n$ points *uniform randomly* in the 
 
 ```{r q1-task}
 ## TASK: Choose a sample size and generate samples
-n <- NA_real_ # Choose a sample size
-df_q1 <- NA # Generate the data
+n_samples <- 100 # Choose a sample size # NOT USED right now
+
+df_q1 <-
+  map_dfr(
+    rep(1e5, n_samples),
+    function(n) {
+      tibble(x = runif(n, min = 0, max = 1), y = runif(n, min = 0, max = 1)) %>%
+      summarize(ratio = sum((y <= sqrt(1 - x^2)))/n()) %>%
+      mutate(pi = 4 * ratio) # Generate the data
+    }
+  )
+df_q1
 ```
 
 __q2__ Using your data in `df_q1`, estimate $\pi$.
 
 ```{r q2-task}
 ## TASK: Estimate pi using your data from q1
-pi_est <- NA_real_
+pi_est <- mean(df_q1$pi)
 pi_est
 ```
 

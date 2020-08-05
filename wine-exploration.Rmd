@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(readr)
 ```
 
 ## R Markdown
@@ -20,17 +21,35 @@ filename <- "./data/cellrtracker_top500_by_rating.csv"
 
 ## Load the data
 df_cellartracker <-
-  read_csv(filename, col_names = c('name', 'vintage', 'searchrank', 'avgrating', 'price'))
-df_cellartracker
+  read_csv(filename, col_names = c('name', 'vintage', 'searchrank', 'rating_100', 'price'))
 
-df_cellartracker %>%
+df_cellartracker <-
+  df_cellartracker %>%
   separate(col = name, into = c('winename', 'loc'), sep = ', ', extra = 'merge') %>%
   separate(col = loc, into = c('region', 'country'), sep = ', ', fill = 'left') %>%
   mutate(
-    rating_100 = str_extract(avgrating, '^(\\d+)'),
+    rating_100 = str_extract(rating_100, '^(\\d+)'),
     price = as.integer(str_remove_all(price, '[\\$,]')),
-    searchrank = as.integer(str_remove_all(searchrank, '\\D')))
+    searchrank = as.integer(str_remove_all(searchrank, '\\D'))
+  )
+df_cellartracker %>%
+  write_csv(path = './data/cellrtracker_top500_by_rating_cleaner.csv')
 
+```
+
+``` {r plot-some-stuff}
+df_cellartracker %>%
+  ggplot(aes(x = price, y = searchrank, color = country)) +
+  geom_point() +
+  scale_y_log10() +
+  scale_x_log10()
+
+df_cellartracker %>%
+  ggplot(aes(x = factor(rating_100), y = -searchrank)) +
+  geom_boxplot(group = country) +
+  coord_flip()
+  #scale_y_log10() +
+  #facet_wrap( ~ country)
 
 
 ```
