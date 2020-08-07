@@ -7,7 +7,15 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(readr)
+#library(readr)
+library(tidyverse)
+library(ggrepel)
+
+library("tm")
+library("SnowballC")
+library("wordcloud")
+library("RColorBrewer")
+library("Matrix")
 ```
 
 ## R Markdown
@@ -17,36 +25,36 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r load-csv}
-filename <- "./data/cellrtracker_top500_by_rating.csv"
+filename <- "./data/CellarTrackerWithIDs.csv"
 
 ## Load the data
 df_cellartracker <-
-  read_csv(filename, col_names = c('name', 'vintage', 'searchrank', 'rating_100', 'price'))
+  read_csv(filename)
 
-df_cellartracker <-
-  df_cellartracker %>%
-  separate(col = name, into = c('winename', 'loc'), sep = ', ', extra = 'merge') %>%
-  separate(col = loc, into = c('region', 'country'), sep = ', ', fill = 'left') %>%
-  mutate(
-    rating_100 = str_extract(rating_100, '^(\\d+)'),
-    price = as.integer(str_remove_all(price, '[\\$,]')),
-    searchrank = as.integer(str_remove_all(searchrank, '\\D'))
-  )
-df_cellartracker %>%
-  write_csv(path = './data/cellrtracker_top500_by_rating_cleaner.csv')
+# df_cellartracker <-
+#   df_cellartracker %>%
+#   separate(col = name, into = c('winename', 'loc'), sep = ', ', extra = 'merge') %>%
+#   separate(col = loc, into = c('region', 'country'), sep = ', ', fill = 'left') %>%
+#   mutate(
+#     rating_100 = str_extract(rating_100, '^(\\d+)'),
+#     price = as.integer(str_remove_all(price, '[\\$,]')),
+#     searchrank = as.integer(str_remove_all(searchrank, '\\D'))
+#   )
+# df_cellartracker %>%
+#   write_csv(path = './data/cellrtracker_top500_by_rating_cleaner.csv')
 
 ```
 
 ``` {r plot-some-stuff}
 df_cellartracker %>%
-  ggplot(aes(x = price, y = searchrank, color = country)) +
-  geom_point() +
+  ggplot(aes(x = price, y = searchrank)) +
+  geom_point(aes(color = country)) +
   scale_y_log10() +
   scale_x_log10()
 
 df_cellartracker %>%
   ggplot(aes(x = factor(rating_100), y = -searchrank)) +
-  geom_boxplot(group = country) +
+  geom_boxplot(aes(group = country)) +
   coord_flip()
   #scale_y_log10() +
   #facet_wrap( ~ country)
@@ -54,12 +62,207 @@ df_cellartracker %>%
 
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+
+
+```{r load}
+filename <- "./data/winemag-data-130k-v2.csv"
+## Load the data
+df_wine <- read_csv(filename)
+```
+## Ben's plots ##
+
+```{r 1}
+df_wine %>% 
+  ggplot()+
+  geom_point(aes(x = price, y = points))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r 2}
+df_wine %>% 
+  ggplot()+
+  geom_histogram(aes( x = points, binwidth = 5, edge =90))+
+  ggtitle("Histogram of Points")
+df_wine %>% 
+  ggplot()+
+  geom_density(aes( x = price))+
+  ggtitle("Density of Price")+
+  scale_x_log10()
+```
+```{r}
+df_wine %>% 
+  filter(country == "Portugal" | country == "US" | country == "France" | country == "Italy" | country == "Austria") %>% 
+  ggplot()+
+  geom_density(aes( x = price, color = country))+
+    ggtitle("Density of Price")+
+  scale_x_log10()
+  
+```
+
+```{r 3}
+summary(df_wine)
+glimpse(df_wine)
+```
+```{r 4}
+df_wineries <- df_wine %>% 
+group_by(winery) %>% 
+   summarize(avgprice = median(price, na.rm = TRUE), "avgpoints" = mean(points, na.rm = TRUE), "n" = n(), stdevpoints = sd(points, na.rm = TRUE) ) %>% 
+  filter(n>20) %>% 
+  arrange(desc(n))
+  
+df_wineries %>% 
+  filter(n>115| (n>25 & avgpoints > 93) | (n > 40 & avgprice < 10)) %>%
+  ggplot(aes(x = avgpoints,y = avgprice))+
+  geom_point(data = df_wineries, alpha = .2)+
+  geom_point( mapping = aes(size = n, color = stdevpoints), alpha = .9)+
+    scale_color_gradient(low = "green", high = "black")+
+  scale_y_log10()+
+   scale_size(range = c(1,8), name = "Reviews")+
+  geom_label_repel(aes(label = winery))+
+  ggtitle("Wine Grouped By Wineries")
+```
+```{r 5}
+df_wine %>% 
+group_by(country) %>% 
+  summarize(avgprice = median(price, na.rm = TRUE), "avgpoints" = mean(points, na.rm = TRUE), "n" = n()) %>% 
+  filter(n>30) %>% 
+  ggplot(aes(x = avgpoints,y = avgprice))+
+  geom_point(aes(size = n, alpha = .5))+
+  scale_size(range = c(1,24), name = "Reviews")+
+  geom_label_repel(aes(label = country), size = 2)+
+  ggtitle("Wine Grouped By Country")
+```
+```{r 6}
+df_wine %>% 
+group_by(variety) %>% 
+  summarize("avgprice" = median(price, na.rm = TRUE), "avgpoints" = mean(points, na.rm = TRUE), "n" = n())  %>% 
+  filter(n >1200) %>% 
+arrange(desc(n)) %>% 
+  ggplot(aes(x = avgpoints,y = avgprice))+
+  geom_point(aes(size = n, alpha = .5))+
+  scale_size(range = c(1,24), name = "Reviews")+
+  geom_label_repel(aes(label = variety), size = 2)+
+  ggtitle("Wine Grouped By Variety")
+```
+```{r 7}
+provinces800 <- df_wine %>% 
+group_by(province) %>% 
+  summarize("avgprice" = median(price, na.rm = TRUE), "avgpoints" = mean(points, na.rm = TRUE), "n" = n())  %>% 
+  filter(n >1000 | (avgpoints > 90 & n>60)) %>% 
+arrange(desc(n))
+provinces80 <- df_wine %>% 
+group_by(province) %>% 
+  summarize("avgprice" = mean(price, na.rm = TRUE), "avgpoints" = mean(points, na.rm = TRUE), "n" = n())  %>% 
+  filter(n >60) %>% 
+arrange(desc(n))
+ ggplot(data = provinces80, mapping = aes(x = avgpoints,y = avgprice))+
+  geom_point(aes(size = n, alpha = .5))+
+  scale_size(range = c(1,24), name = "Reviews")+
+  geom_label_repel(data = provinces800, mapping = aes(label = province), size = 2)+
+   ggtitle("Wine Grouped By Province")
+ 
+```
+
+
+```{r 8}
+df_wine %>% 
+group_by(title) %>% 
+  summarize("avgprice" = median(price, na.rm = TRUE), "avgpoints" = mean(points, na.rm = TRUE), "n" = n())  %>% 
+  filter(n >2) %>% 
+arrange(desc(n)) %>% 
+   ggplot(aes(x = avgpoints,y = avgprice))+
+  geom_point(aes(size = n, alpha = .5))+
+  scale_size(range = c(1,4), name = "Reviews")+
+  scale_y_log10()+
+  geom_smooth(se = FALSE)+
+  ggtitle("Wines with 3+ Reviews")
+ 
+```
+
+```{r}
+
+df_winemag <- read_csv('./data/winemag-data-130k-v2.csv')
+df_globalwine <- read_csv('./data/GlobalWineScoreWithIDs.csv')
+
+#df_wine %>%
+  #filter(str_detect(description, 'thyme'))
+
+
+
+```
+
+## Let's try a word cloud! ##
+df_wine is too big for the matrix step, so I'm using a smaller slice.
+Here is the word cloud for reviews of wines from Italy.
+
+```{r}
+irrelevant_words <-
+  c(
+    "producers", "made", "wine", "delivery", 
+    "many", "wines", "still", "take", "hints", "especially", "box", "sets", 
+    "nose", "already", "grown", "quite", "long", "although", "region", "along", "length", "also", "carries", "whiff",
+    "mouthfeel", "gives", "way", "alongside", "fully", "produced", "mouth", 
+    "capture", "feels", "get", "touches", "makes", "carry", "rather", "come", "will", "recall", "offering", "glass", "palate", "offers", "opens", "opening", "finish", "drink", "note", "notes", "delivers", "shows", "touch", "starting", "starts", "giving", "create", "example", "notice", "characterized", "appear", "hint", "aroma", "aromas"
+  )
+
+df_italy <- df_wine %>% filter(country == 'Italy')
+
+typeof(df_italy)
+typeof(df_italy$description)
+
+fnMakeWordCountMatrix <-
+  function(charinput)
+  {
+    corp <- Corpus(VectorSource(df_italy$description))
+    toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
+    corp <- tm_map(corp, toSpace, "[\\.,]")
+    corp <- tm_map(corp, toSpace, "\\s-\\s")
+    # Convert the text to lower case
+    corp <- tm_map(corp, content_transformer(tolower))
+    # Remove numbers
+    corp <- tm_map(corp, removeNumbers)
+    # Remove english common stopwords
+    corp <- tm_map(corp, removeWords, stopwords("english"))
+    # Remove your own stop word
+    # specify your stopwords as a character vector
+    corp <- tm_map(corp, removeWords, irrelevant_words) 
+    # Remove punctuations
+    corp <- tm_map(corp, removePunctuation)
+    # Eliminate extra white spaces
+    corp <- tm_map(corp, stripWhitespace)
+    # Text stemming
+    #corp <- tm_map(corp, stemDocument) # this yielded weird results
+    
+    dtm <- TermDocumentMatrix(corp)
+    m <- as.matrix(dtm)
+
+    # Return m
+    m
+  }
+
+
+
+
+m <- as.matrix(dtm) # Cannot allocate vector of size 42.2 Gb! :-O
+# I'll try this instead
+#m_sparse <- sparseMatrix(i = dtm$i, j = dtm$j, x = dtm$v, dims = c(dtm$nrow, dtm$ncol), dimnames = dtm$dimnames)
+
+v <- sort(rowSums(m), decreasing = TRUE)
+d <- data.frame(word = names(v), freq = v)
+head(d, 10)
+
+
+set.seed(1234)
+wordcloud(
+  words = d$word,
+  freq = d$freq,
+  min.freq = 1,
+  max.words=200,
+  random.order=FALSE,
+  rot.per=0.35, 
+  colors=brewer.pal(8, "Dark2"))
+```
+
+
+```
