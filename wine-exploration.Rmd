@@ -26,184 +26,65 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r load-csv}
-filename <- "./data/CellarTrackerWithIDs.csv"
-
-## Load the data
-df_cellartracker <-
-  read_csv(filename)
-
-# df_cellartracker <-
-#   df_cellartracker %>%
-#   separate(col = name, into = c('winename', 'loc'), sep = ', ', extra = 'merge') %>%
-#   separate(col = loc, into = c('region', 'country'), sep = ', ', fill = 'left') %>%
-#   mutate(
-#     rating_100 = str_extract(rating_100, '^(\\d+)'),
-#     price = as.integer(str_remove_all(price, '[\\$,]')),
-#     searchrank = as.integer(str_remove_all(searchrank, '\\D'))
-#   )
-# df_cellartracker %>%
-#   write_csv(path = './data/cellrtracker_top500_by_rating_cleaner.csv')
-
-```
-
-``` {r plot-some-stuff}
-df_cellartracker %>%
-  ggplot(aes(x = price, y = searchrank)) +
-  geom_point(aes(color = country)) +
-  scale_y_log10() +
-  scale_x_log10()
-
-df_cellartracker %>%
-  ggplot(aes(x = factor(rating_100), y = -searchrank)) +
-  geom_boxplot(aes(group = country)) +
-  coord_flip()
-  #scale_y_log10() +
-  #facet_wrap( ~ country)
-
-
-```
-
-
-
-
 
 ```{r load}
-filename <- "./data/winemag-data-130k-v2.csv"
 ## Load the data
-df_wine <- read_csv(filename)
+df_wine <- read_csv("./data/winemag-data-130k-v2.csv") # Wine mag with more ratings included, but no IDs
 
 df_wine <-
   df_wine %>%
   mutate(vintage = parse_number(title)) %>%
   filter(vintage > 1900 & vintage < 2020)
-```
-## Ben's plots ##
 
-```{r 1}
-df_wine %>% 
-  ggplot()+
-  geom_point(aes(x = price, y = points))
-```
+df_winemag <- read_csv("./data/winereviews94p_with_ids.csv") # Wine mag with only 94+ ratings, and with IDs
+df_winemag <-
+  df_winemag %>%
+  mutate(vintage = parse_number(title)) %>%
+  filter(vintage > 1900 & vintage < 2020)
 
-```{r 2}
-df_wine %>% 
-  ggplot()+
-  geom_histogram(aes( x = points, binwidth = 5, edge =90))+
-  ggtitle("Histogram of Points")
-df_wine %>% 
-  ggplot()+
-  geom_density(aes( x = price))+
-  ggtitle("Density of Price")+
-  scale_x_log10()
-```
-```{r}
-df_wine %>% 
-  filter(country == "Portugal" | country == "US" | country == "France" | country == "Italy" | country == "Austria") %>% 
-  ggplot()+
-  geom_density(aes( x = price, color = country))+
-    ggtitle("Density of Price")+
-  scale_x_log10()
-  
-```
+glimpse(df_winemag)
 
-```{r 3}
-summary(df_wine)
-glimpse(df_wine)
-```
-```{r 4}
-df_wineries <- df_wine %>% 
-group_by(winery) %>% 
-   summarize(avgprice = median(price, na.rm = TRUE), "avgpoints" = mean(points, na.rm = TRUE), "n" = n(), stdevpoints = sd(points, na.rm = TRUE) ) %>% 
-  filter(n>20) %>% 
-  arrange(desc(n))
-  
-df_wineries %>% 
-  filter(n>115| (n>25 & avgpoints > 93) | (n > 40 & avgprice < 10)) %>%
-  ggplot(aes(x = avgpoints,y = avgprice))+
-  geom_point(data = df_wineries, alpha = .2)+
-  geom_point( mapping = aes(size = n, color = stdevpoints), alpha = .9)+
-    scale_color_gradient(low = "green", high = "black")+
-  scale_y_log10()+
-   scale_size(range = c(1,8), name = "Reviews")+
-  geom_label_repel(aes(label = winery))+
-  ggtitle("Wine Grouped By Wineries")
-```
-```{r 5}
-df_wine %>% 
-group_by(country) %>% 
-  summarize(avgprice = median(price, na.rm = TRUE), "avgpoints" = mean(points, na.rm = TRUE), "n" = n()) %>% 
-  filter(n>30) %>% 
-  ggplot(aes(x = avgpoints,y = avgprice))+
-  geom_point(aes(size = n, alpha = .5))+
-  scale_size(range = c(1,24), name = "Reviews")+
-  geom_label_repel(aes(label = country), size = 2)+
-  ggtitle("Wine Grouped By Country")
-```
-```{r 6}
-df_wine %>% 
-group_by(variety) %>% 
-  summarize("avgprice" = median(price, na.rm = TRUE), "avgpoints" = mean(points, na.rm = TRUE), "n" = n())  %>% 
-  filter(n >1200) %>% 
-arrange(desc(n)) %>% 
-  ggplot(aes(x = avgpoints,y = avgprice))+
-  geom_point(aes(size = n, alpha = .5))+
-  scale_size(range = c(1,24), name = "Reviews")+
-  geom_label_repel(aes(label = variety), size = 2)+
-  ggtitle("Wine Grouped By Variety")
-```
-```{r 7}
-provinces800 <- df_wine %>% 
-group_by(province) %>% 
-  summarize("avgprice" = median(price, na.rm = TRUE), "avgpoints" = mean(points, na.rm = TRUE), "n" = n())  %>% 
-  filter(n >1000 | (avgpoints > 90 & n>60)) %>% 
-arrange(desc(n))
-provinces80 <- df_wine %>% 
-group_by(province) %>% 
-  summarize("avgprice" = mean(price, na.rm = TRUE), "avgpoints" = mean(points, na.rm = TRUE), "n" = n())  %>% 
-  filter(n >60) %>% 
-arrange(desc(n))
- ggplot(data = provinces80, mapping = aes(x = avgpoints,y = avgprice))+
-  geom_point(aes(size = n, alpha = .5))+
-  scale_size(range = c(1,24), name = "Reviews")+
-  geom_label_repel(data = provinces800, mapping = aes(label = province), size = 2)+
-   ggtitle("Wine Grouped By Province")
- 
-```
+df_scraper <-
+  read_csv('./data/facts_about_winereviews94p.csv', na = 'n/a') %>%
+  select(-vintage, -natural, -organic, -biodynamic, -buyUrl, -structureCount, -aromaIntensity, -primaryAromas, -secondaryAromas, -tertiaryAromas, -balance, -length, -finish, -complexity, -conclusion, -ageing, -quality, -body, -noseDevelopment, -noseIntensity, -colorIntensity, -color, -tertiaryFlavors, -professionalReviews, -userReviews) %>%
+  distinct(`_id`, `_vintageId`, .keep_all = TRUE)
+
+glimpse(df_scraper)
+
+df_scraper_json <-
+  df_scraper %>%
+  mutate(
+    primaryFlavors = map(primaryFlavors, fromJSON),
+    secondaryFlavors = map(secondaryFlavors, fromJSON),
+    grapes = map(grapes, fromJSON),
+    foods = map(foods, fromJSON)
+  )
+
+glimpse(df_scraper_json)
 
 
-```{r 8}
-df_wine %>% 
-group_by(title) %>% 
-  summarize("avgprice" = median(price, na.rm = TRUE), "avgpoints" = mean(points, na.rm = TRUE), "n" = n())  %>% 
-  filter(n >2) %>% 
-arrange(desc(n)) %>% 
-   ggplot(aes(x = avgpoints,y = avgprice))+
-  geom_point(aes(size = n, alpha = .5))+
-  scale_size(range = c(1,4), name = "Reviews")+
-  scale_y_log10()+
-  geom_smooth(se = FALSE)+
-  ggtitle("Wines with 3+ Reviews")
- 
+df_winereviews_facts <-
+  df_winemag %>%
+  inner_join(
+    df_scraper_json,
+    by = c("_id", "_vintageId")
+  ) %>%
+  filter(!is.na(`_id`)) %>%
+  mutate(
+    price.y = as.double(str_remove(price.y, '\\$')),
+    price.x = as.double(price.x)) %>%
+  distinct(`_id`, `_vintageId`, .keep_all = TRUE)
+
+glimpse(df_winereviews_facts)
 ```
+## My own stuff ##
 
-```{r}
-
-df_winemag <- read_csv('./data/winemag-data-130k-v2.csv')
-df_globalwine <- read_csv('./data/GlobalWineScoreWithIDs.csv')
-
-#df_wine %>%
-  #filter(str_detect(description, 'thyme'))
-
-
-
-```
 
 ## Let's try a word cloud! ##
 df_wine is too big for the matrix step, so I'm using a smaller slice.
 Here is the word cloud for reviews of wines from Italy.
 
-```{r}
+```{r wordcloud}
 irrelevant_words <-
   c(
     "notes", 
@@ -255,14 +136,13 @@ fnMakeWordCountMatrix <-
     m
   })
 
+set.seed(1234)
 fnDrawWordCloud <-
   (function(m, title)
   {
     v <- sort(rowSums(m), decreasing = TRUE)
     d <- data.frame(word = names(v), freq = v)
     head(d, 10)
-    
-    set.seed(1234)
     
     layout(matrix(c(1, 2), nrow = 2), heights = c(1, 4))
     par(mar = rep(0, 4))
@@ -304,7 +184,7 @@ fnDrawWordCloud <-
 ```
 
 I'd like to slice things in different ways. Lee suggests grape variety.
-```{r}
+```{r varieties}
 
 varieties <-
   df_wine %>%
@@ -323,14 +203,14 @@ varieties %>%
 ```
 What are the most common words in wine reviews for the top 3 reviewed varieties?
 (Bar charts would be more useful, but word clouds are more fun.)
-```{r}
-m_pinotnoir <- df_wine %>% filter(variety == 'Pinot Noir') %>% fnMakeWordCountMatrix()
-m_chard <- df_wine %>% filter(variety == 'Chardonnay') %>% fnMakeWordCountMatrix()
-m_cabsauv <- df_wine %>% filter(variety == 'Cabernet Sauvignon') %>% fnMakeWordCountMatrix()
-
-m_pinotnoir %>% fnDrawWordCloud(title = 'Pinot Noir')
-m_chard %>% fnDrawWordCloud(title = 'Chardonnay')
-m_cabsauv %>% fnDrawWordCloud(title = 'Cabernet Sauvignon')
+```{r varietywords}
+# m_pinotnoir <- df_wine %>% filter(variety == 'Pinot Noir') %>% fnMakeWordCountMatrix()
+# m_chard <- df_wine %>% filter(variety == 'Chardonnay') %>% fnMakeWordCountMatrix()
+# m_cabsauv <- df_wine %>% filter(variety == 'Cabernet Sauvignon') %>% fnMakeWordCountMatrix()
+# 
+# m_pinotnoir %>% fnDrawWordCloud(title = 'Pinot Noir')
+# m_chard %>% fnDrawWordCloud(title = 'Chardonnay')
+# m_cabsauv %>% fnDrawWordCloud(title = 'Cabernet Sauvignon')
 
 
 df_wine %>% filter(region_1 == "Sauternes") %>%
@@ -345,16 +225,7 @@ m_sauternes_2005 <- df_wine %>% filter(region_1 == "Sauternes", vintage == 2005)
 m_sauternes %>% fnDrawWordCloud(title = 'Sauternes')
 m_sauternes_2005 %>% fnDrawWordCloud(title = 'Sauternes 2005')
 ```
-```{r}
-df_scraper <-
-  read_csv('./data/facts_about_winereviews94p.csv', na = 'n/a') %>%
-  select(-vintage, -natural, -organic, -biodynamic, -buyUrl, -structureCount, -aromaIntensity, -primaryAromas, -secondaryAromas, -tertiaryAromas, -balance, -length, -finish, -complexity, -conclusion, -ageing, -quality, -body, -noseDevelopment, -noseIntensity, -colorIntensity, -color, -tertiaryFlavors, -professionalReviews, -userReviews) %>%
-  distinct(`_id`, `_vintageId`, .keep_all = TRUE)
-
-glimpse(df_scraper)
-```
-
-``` {r}
+``` {r flavors}
 
 # df_scraperflavors <-
 #   df_scraper %>%
@@ -366,33 +237,50 @@ glimpse(df_scraper)
 # 
 # glimpse(df_scraperflavors)
 # 
-# all_primary_flavors <-
-#   df_scraperflavors %>%
-#   select(`_id`, primaryFlavors) %>%
-#   unnest(c(primaryFlavors)) %>%
-#   group_by(name) %>%
-#   summarize(count = sum(count))
+all_primary_flavors <-
+  df_scraperflavors %>%
+  select(`_id`, primaryFlavors) %>%
+  unnest(c(primaryFlavors)) %>%
+  group_by(name) %>%
+  summarize(count = sum(count))
+
+glimpse(all_primary_flavors)
+
+# Draw word cloud of primary flavors
+layout(matrix(c(1, 2), nrow = 2), heights = c(1, 4))
+par(mar = rep(0, 4))
+plot.new()
+text(x = 0.5, y = 0.5, 'Primary flavors')
+wordcloud(
+  main = 'Title',
+  words = all_primary_flavors$name,
+  freq = all_primary_flavors$count,
+  min.freq = 1,
+  max.words = 200,
+  random.order = FALSE,
+  #rot.per = 0.35, 
+  rot.per = 0,
+  fixed.asp = FALSE,
+  colors = brewer.pal(8, "Dark2"))
+
+
+
 ```
+Some of these demand further explanation.
+pencil lead
+graphite
+pencil shavings
+stone
+flint
+rubber
+chalk
+wax
+saline
+underbrush
+petroleum
 
-``` {r json}
-# df_scraperflavors %>%
-#   #slice(1:4) %>%
-#   mutate(fSweaty = map(primaryFlavors, fnListHasFlavor, 'sweaty saddle')) %>%
-#   unnest(fSweaty) %>%
-#   filter(fSweaty) %>%
-#   select(name) %>%
-#   knitr::kable(caption = 'Wines characterized as "sweaty saddle"')
+orange blossom sounds nice.
 
-df_scraper_json <-
-  df_scraper %>%
-  mutate(
-    primaryFlavors = map(primaryFlavors, fromJSON),
-    secondaryFlavors = map(secondaryFlavors, fromJSON),
-    grapes = map(grapes, fromJSON)
-  )
-
-glimpse(df_scraper_json)
-```
 
 
 
@@ -410,6 +298,8 @@ df_grapes
 ```
 
 
+
+
 ``` {r findflavor}
 # Return TRUE if the requested flavorname is in the list. Helper for the nested dataframe columns.
 fnListHasElement <-
@@ -425,13 +315,15 @@ fnListHasElement <-
 
 ``` {r sweaty}
 df_sweaty <-
-  df_scraper_json %>%
+  df_winereviews_facts %>%
   mutate(fSweaty = map(primaryFlavors, fnListHasElement, 'sweaty saddle')) %>%
   unnest(fSweaty) %>%
-  filter(fSweaty)
+  filter(fSweaty) %>%
+  mutate(is_white = is.na(tannin))
 
 df_sweaty %>%
-  select(name, price) %>%
+  select(name, region, producer, tannin, rating, points, price.x, price.y) %>%
+  arrange(points, name) %>%
   knitr::kable(caption = 'Wines characterized as "sweaty saddle"')
 
   
@@ -439,5 +331,166 @@ df_sweaty %>%
 # tibble(all_primary_flavors %>% arrange(count))
 
 ```
+## Compare red and white wine primary flavors ##
+```{r}
+df_redwhite <-
+  df_winereviews_facts %>%
+  mutate(fRed = !is.na(tannin)) %>%
+  mutate(winename = name) %>%
+  select(-name)
+
+length(df_redwhite$primaryFlavors[1])
+
+glimpse(df_redwhite)
+
+# Flavor statistics by wine color
+df_primaryflavors <-
+  df_redwhite %>%
+  unnest(primaryFlavors)
+
+df_flavorstats <-
+  df_primaryflavors %>%
+  group_by(fRed, name) %>%
+  summarize(flavorcountraw = sum(count), numwinesingroup = n()) %>%
+  mutate(
+    numwinesincolor = sum(numwinesingroup),
+    numflavorsincolor = n_distinct(name),
+    flavorrank = as.integer(rank(desc(flavorcountraw))),
+    rankprop = flavorrank / numflavorsincolor * 100,
+    flavorcountprop = flavorcountraw / numwinesincolor
+  ) %>%
+  ungroup() %>%
+  arrange(fRed, flavorrank)
+
+df_flavorstats_red <- df_flavorstats %>% filter(fRed)
+df_flavorstats_white <- df_flavorstats %>% filter(!fRed)
+
+df_flavorstats_white %>% arrange(flavorrank)
+
+# Draw word cloud of primary flavors
+# layout(matrix(c(1, 2), nrow = 2), heights = c(1, 4))
+# par(mar = rep(0, 4))
+# plot.new()
+# text(x = 0.5, y = 0.5, 'Red wine flavors')
+wordcloud(
+  words = df_flavorstats_red$name,
+  freq = df_flavorstats_red$flavorcountraw,
+  min.freq = 1,
+  max.words = 200,
+  random.order = FALSE,
+  #rot.per = 0.35, 
+  rot.per = 0,
+  fixed.asp = FALSE,
+  colors = brewer.pal(8, "Dark2"))
+
+# layout(matrix(c(1, 2), nrow = 2), heights = c(1, 4))
+# par(mar = rep(0, 4))
+# plot.new()
+# text(x = 0.5, y = 0.5, 'White wine flavors')
+wordcloud(
+  words = df_flavorstats_white$name,
+  freq = df_flavorstats_white$flavorcountraw,
+  min.freq = 1,
+  max.words = 200,
+  random.order = FALSE,
+  #rot.per = 0.35, 
+  rot.per = 0,
+  fixed.asp = FALSE,
+  colors = brewer.pal(8, "Dark2"))
+
+```
+```{r}
+# Compare most common red flavors with most common white flavors, by normalized rank
+df_frequentflavors <-
+  df_flavorstats %>%
+  filter(flavorrank <= 10) %>%
+  select(name) %>%
+  distinct(name)
+
+# Hardcode it! Hack!
+#df_flavorstats$name <- factor(df_flavorstats$name, c('blackberry', 'leather', 'cherry', 'vanilla', 'oak', 'minerals', 'honey', 'apple', 'citrus'))
+
+df_flavorstats$name <- factor(df_flavorstats$name, levels = df_flavorstats$name[order(df_flavorstats_white$flavorcountraw)])
+         
+df_flavorstats %>%
+  filter(name %in% df_frequentflavors$name) %>%
+  #select(fRed, name, flavorrank, rankprop, flavorcountprop) %>%
+  #arrange(name) %>%
+  ggplot(aes(x = name, y = flavorcountprop)) +
+  geom_col(aes(fill = !fRed), position = "dodge") +
+  coord_flip() +
+  scale_fill_discrete(name = "Wine color", labels = c("Red", "White")) +
+  ggtitle('Common primary flavors in red vs white wines') +
+  xlab('Flavor') +
+  ylab('Popularity (number of times used / number of wines in dataset)')
+
+
+```
+
+
+
+
+```{r}
+# pencil lead
+# graphite
+# pencil shavings
+# stone
+# flint
+# rubber
+# chalk
+# wax
+# saline
+# underbrush
+# petroleum
+# 
+# orange blossom sounds nice.
+
+df_pencilshavings <-
+  df_winereviews_facts %>%
+  mutate(fPencilShavings = map(primaryFlavors, fnListHasElement, 'pencil shavings')) %>%
+  unnest(fPencilShavings) %>%
+  filter(fPencilShavings) %>%
+  mutate(is_white = is.na(tannin))
+
+df_pencilshavings %>%
+  select(name, vintage, region, producer, tannin, rating, points, price.x, price.y) %>%
+  arrange(points, name) 
+  #knitr::kable(caption = 'Wines characterized as "pencil shavings"')
+
+
+```
+
+How about a word cloud of other primary flavors associated with pencil shavings?
+```{r pencilshavingswords}
+m_pencilshavings <- df_pencilshavings %>% fnMakeWordCountMatrix()
+
+m_pencilshavings %>% fnDrawWordCloud(title = 'Flavors associated with pencil shavings')
+
+```
+
+What meals should you eat with pencil shavings?
+```{r}
+df_pencil_foods <-
+  df_winereviews_facts %>%
+  mutate(fPencilShavings = (`_vintageId` %in% df_pencilshavings$`_vintageId`)) %>%
+  mutate(counttotal = n()) %>%
+  group_by(fPencilShavings) %>%
+  mutate(counttotal_pencil= n()) %>%
+  ungroup() %>%
+  unnest(foods) %>%
+  group_by(fPencilShavings, foods) %>%
+  summarize(foodcount = n(), foodcountprop_pencil = foodcount / counttotal_pencil, foodcountprop = foodcount / counttotal, counttotal_pencil) %>%
+  distinct(fPencilShavings, foods, foodcount, foodcountprop_pencil, foodcountprop, counttotal_pencil)
+
+df_pencilshavingsfoods <-
+  df_pencil_foods %>%
+  filter(fPencilShavings)
+
+df_pencil_foods %>%
+  ggplot() +
+  geom_col(aes(x = foods, y = foodcountprop, fill = fPencilShavings, group = fPencilShavings), position = "dodge", width = 0.8) + # all points
+  coord_flip()
+```
+
 
 ```
