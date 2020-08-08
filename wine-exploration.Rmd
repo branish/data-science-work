@@ -16,6 +16,7 @@ library("SnowballC")
 library("wordcloud")
 library("RColorBrewer")
 library("Matrix")
+library("utf8")
 ```
 
 ## R Markdown
@@ -70,6 +71,11 @@ df_cellartracker %>%
 filename <- "./data/winemag-data-130k-v2.csv"
 ## Load the data
 df_wine <- read_csv(filename)
+
+df_wine <-
+  df_wine %>%
+  mutate(vintage = parse_number(title)) %>%
+  filter(vintage > 1900 & vintage < 2020)
 ```
 ## Ben's plots ##
 
@@ -199,70 +205,173 @@ Here is the word cloud for reviews of wines from Italy.
 ```{r}
 irrelevant_words <-
   c(
+    "notes", 
     "producers", "made", "wine", "delivery", 
     "many", "wines", "still", "take", "hints", "especially", "box", "sets", 
-    "nose", "already", "grown", "quite", "long", "although", "region", "along", "length", "also", "carries", "whiff",
-    "mouthfeel", "gives", "way", "alongside", "fully", "produced", "mouth", 
-    "capture", "feels", "get", "touches", "makes", "carry", "rather", "come", "will", "recall", "offering", "glass", "palate", "offers", "opens", "opening", "finish", "drink", "note", "notes", "delivers", "shows", "touch", "starting", "starts", "giving", "create", "example", "notice", "characterized", "appear", "hint", "aroma", "aromas"
+    "nose", "already", "grown", "quite", "long",
+    "although", "region", "along", "palate", "also", "carries", "whiff",
+    "mouthfeel", "gives", "way", "alongside", "fully", "characterized", "mouth", 
+    "capture", "feels", "get", "touches", "makes", "carry", "rather", "come", "will", "recall", "offering", "glass", "offers", "opens", "opening", "finish", "drink", "note", "delivers", "shows", "touch", "starting", "starts", "giving", "create", "example", "notice", "appear", "hint", "aroma", "aromas", "one", "together", "support", "thanks", "length", "produced", "accentuate", "accentuates", "access", "accesses", "accessable", "accessible", "accept",
   )
 
-df_italy <- df_wine %>% filter(country == 'Italy')
-
-typeof(df_italy)
-typeof(df_italy$description)
-
 fnMakeWordCountMatrix <-
-  function(charinput)
+  (function(charinput)
   {
-    corp <- Corpus(VectorSource(df_italy$description))
+    corp <- Corpus(VectorSource(charinput))
+    print('Converting to UTF-8...')
+    corp <- tm_map(corp, as_utf8)
+    print('Converting some things to spaces...')
     toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
     corp <- tm_map(corp, toSpace, "[\\.,]")
     corp <- tm_map(corp, toSpace, "\\s-\\s")
+    #corp <- tm_map(corp, toSpace, "\\\\u0097")
     # Convert the text to lower case
+    print('Convert to lowercase...')
     corp <- tm_map(corp, content_transformer(tolower))
     # Remove numbers
+    print('Remove numbers...')
     corp <- tm_map(corp, removeNumbers)
     # Remove english common stopwords
+    print('Remove stopwords...')
     corp <- tm_map(corp, removeWords, stopwords("english"))
     # Remove your own stop word
     # specify your stopwords as a character vector
     corp <- tm_map(corp, removeWords, irrelevant_words) 
     # Remove punctuations
+    print('Remove punctuation...')
     corp <- tm_map(corp, removePunctuation)
     # Eliminate extra white spaces
+    print('Strip extra whitespace...')
     corp <- tm_map(corp, stripWhitespace)
     # Text stemming
     #corp <- tm_map(corp, stemDocument) # this yielded weird results
+    print('Text cleanup is done! Returning matrix.')
     
     dtm <- TermDocumentMatrix(corp)
     m <- as.matrix(dtm)
 
     # Return m
     m
-  }
+  })
 
+fnDrawWordCloud <-
+  (function(m, title)
+  {
+    v <- sort(rowSums(m), decreasing = TRUE)
+    d <- data.frame(word = names(v), freq = v)
+    head(d, 10)
+    
+    set.seed(1234)
+    
+    layout(matrix(c(1, 2), nrow = 2), heights = c(1, 4))
+    par(mar = rep(0, 4))
+    plot.new()
+    text(x = 0.5, y = 0.5, title)
+    wordcloud(
+      main = 'Title',
+      words = d$word,
+      freq = d$freq,
+      min.freq = 1,
+      max.words = 200,
+      random.order = FALSE,
+      #rot.per = 0.35, 
+      rot.per = 0,
+      fixed.asp = FALSE,
+      colors = brewer.pal(8, "Dark2"))
+  })
+#df_wine %>% group_by(country) %>% summarize(n = n()) %>% arrange(desc(n))
+#df_wine %>% filter(country == "US") <- df_italy$description %>% fnMakeWordCountMatrix()
 
+# Italy
+m_italy <- df_wine %>% filter(country == 'Italy') %>% fnMakeWordCountMatrix()
 
+# France
+m_france <- df_wine %>% filter(country == 'France') %>% fnMakeWordCountMatrix()
 
-m <- as.matrix(dtm) # Cannot allocate vector of size 42.2 Gb! :-O
-# I'll try this instead
-#m_sparse <- sparseMatrix(i = dtm$i, j = dtm$j, x = dtm$v, dims = c(dtm$nrow, dtm$ncol), dimnames = dtm$dimnames)
+library(dplyr)
+glimpse(m_italy)
+glimpse(m_france)
+glimpse(df_wine %>% filter(country == 'Italy'))
+# US
+m_us <- df_wine %>% filter(country == 'US') %>% sample_n(10000) %>% fnMakeWordCountMatrix()
+glimpse(m_us)
+m_us
 
-v <- sort(rowSums(m), decreasing = TRUE)
-d <- data.frame(word = names(v), freq = v)
-head(d, 10)
+# temp <- df_wine %>% filter(country == 'US') %>% slice(1)
+# corp <- Corpus(VectorSource(temp$description))
+# toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
+# corp <- tm_map(corp, toSpace, "[\\.,(\\s-\\s)]")
+# corp <- tm_map(corp, toSpace, "\\s-\\s")
+# corp <- tm_map(corp, toSpace, "\\\\u0097")
+# corp <- tm_map(corp, as_utf8)
 
+m_italy %>% fnDrawWordCloud(title = 'Wines from Italy')
+m_france %>% fnDrawWordCloud(title = 'Wines from France')
+m_us %>% fnDrawWordCloud(title = 'Wines from US')
 
-set.seed(1234)
-wordcloud(
-  words = d$word,
-  freq = d$freq,
-  min.freq = 1,
-  max.words=200,
-  random.order=FALSE,
-  rot.per=0.35, 
-  colors=brewer.pal(8, "Dark2"))
+# The full dataset is too big.
+# m <- as.matrix(dtm) # Cannot allocate vector of size 42.2 Gb! :-O
+# Something online recommended doing sparseMatrix instead, but I still can't turn it back into a matrix if it's too large...
+# m_sparse <- sparseMatrix(i = dtm$i, j = dtm$j, x = dtm$v, dims = c(dtm$nrow, dtm$ncol), dimnames = dtm$dimnames)
+
 ```
 
+I'd like to slice things in different ways. Lee suggests grape variety.
+```{r}
+
+varieties <-
+  df_wine %>%
+  group_by(variety) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+varieties$variety <-
+  factor(x = varieties$variety, levels = varieties$variety[order(varieties$n)])
+
+varieties %>%
+  filter(rank(desc(n)) <= 30) %>%
+  ggplot(aes(x = variety, y = n)) +
+  geom_col(stat = 'identity') +
+  coord_flip() +
+  ggtitle('30 most reviewed grape varieties')
+```
+What are the most common words in wine reviews for the top 3 reviewed varieties?
+```{r}
+m_pinotnoir <- df_wine %>% filter(variety == 'Pinot Noir') %>% fnMakeWordCountMatrix()
+m_chard <- df_wine %>% filter(variety == 'Chardonnay') %>% fnMakeWordCountMatrix()
+m_cabsauv <- df_wine %>% filter(variety == 'Cabernet Sauvignon') %>% fnMakeWordCountMatrix()
+
+m_pinotnoir %>% fnDrawWordCloud(title = 'Pinot Noir')
+m_chard %>% fnDrawWordCloud(title = 'Chardonnay')
+m_cabsauv %>% fnDrawWordCloud(title = 'Cabernet Sauvignon')
+
+
+df_wine %>% filter(region_1 == "Sauternes") %>%
+  ggplot(aes(x = vintage, group = vintage, y = points)) +
+  geom_boxplot() +
+  ggtitle('Point distribution per year for Sauternes region')
+
+# These group sample sizes are too small to be effective.
+m_sauternes <- df_wine %>% filter(region_1 == "Sauternes") %>% fnMakeWordCountMatrix()
+m_sauternes_2005 <- df_wine %>% filter(region_1 == "Sauternes", vintage == 2005) %>% fnMakeWordCountMatrix()
+
+m_sauternes %>% fnDrawWordCloud(title = 'Sauternes')
+m_sauternes_2005 %>% fnDrawWordCloud(title = 'Sauternes 2005')
+```
+```{r}
+df_scraper <- read_csv('./data/facts_about_winereviews94p.csv', na = 'n/a') %>%
+  select(-vintage, -natural, -organic, -biodynamic, -buyUrl, -structureCount, -aromaIntensity, -primaryAromas, -secondaryAromas, -tertiaryAromas, -balance, -length, -finish, -complexity, -conclusion, -ageing, -quality, -body, -noseDevelopment, -noseIntensity, -colorIntensity, -color, -tertiaryFlavors)
+glimpse(df_scraper)
+
+
+jsonSample <- df_scraper$primaryFlavors[1]
+library(jsonlite)
+df_json <- fromJSON(jsonSample)
+df_json %>% tibble()
+
+df_small <- df_scraper %>% slice(1:3)
+df_flavors <- map_df(df_small$primaryFlavors, fromJSON) %>% group_by(name) %>% summarize(count = sum(count))
+df_small %>% slice(c(1, 3)) %>% mutate(flavorlist = map(primaryFlavors, fromJSON), )
+#typeof(fromJSON(df_small$primaryFlavors[1]))
+```
 
 ```
