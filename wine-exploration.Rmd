@@ -17,6 +17,7 @@ library("wordcloud")
 library("RColorBrewer")
 library("Matrix")
 library("utf8")
+library("jsonlite")
 ```
 
 ## R Markdown
@@ -211,7 +212,7 @@ irrelevant_words <-
     "nose", "already", "grown", "quite", "long",
     "although", "region", "along", "palate", "also", "carries", "whiff",
     "mouthfeel", "gives", "way", "alongside", "fully", "characterized", "mouth", 
-    "capture", "feels", "get", "touches", "makes", "carry", "rather", "come", "will", "recall", "offering", "glass", "offers", "opens", "opening", "finish", "drink", "note", "delivers", "shows", "touch", "starting", "starts", "giving", "create", "example", "notice", "appear", "hint", "aroma", "aromas", "one", "together", "support", "thanks", "length", "produced", "accentuate", "accentuates", "access", "accesses", "accessable", "accessible", "accept",
+    "capture", "feels", "get", "touches", "makes", "carry", "rather", "come", "will", "recall", "offering", "glass", "offers", "opens", "opening", "finish", "drink", "note", "delivers", "shows", "touch", "starting", "starts", "giving", "create", "example", "notice", "appear", "hint", "aroma", "aromas", "one", "together", "support", "thanks", "length", "produced", "accentuate", "accentuates", "access", "accesses", "accessable", "accessible", "accept"
   )
 
 fnMakeWordCountMatrix <-
@@ -279,40 +280,26 @@ fnDrawWordCloud <-
       fixed.asp = FALSE,
       colors = brewer.pal(8, "Dark2"))
   })
-#df_wine %>% group_by(country) %>% summarize(n = n()) %>% arrange(desc(n))
-#df_wine %>% filter(country == "US") <- df_italy$description %>% fnMakeWordCountMatrix()
 
-# Italy
-m_italy <- df_wine %>% filter(country == 'Italy') %>% fnMakeWordCountMatrix()
+# # Italy
+# m_italy <- df_wine %>% filter(country == 'Italy') %>% fnMakeWordCountMatrix()
+# 
+# # France
+# m_france <- df_wine %>% filter(country == 'France') %>% fnMakeWordCountMatrix()
+# 
+# library(dplyr)
+# glimpse(m_italy)
+# glimpse(m_france)
+# glimpse(df_wine %>% filter(country == 'Italy'))
+# # US
+# m_us <- df_wine %>% filter(country == 'US') %>% sample_n(10000) %>% fnMakeWordCountMatrix()
+# glimpse(m_us)
+# m_us
+# 
+# m_italy %>% fnDrawWordCloud(title = 'Wines from Italy')
+# m_france %>% fnDrawWordCloud(title = 'Wines from France')
+# m_us %>% fnDrawWordCloud(title = 'Wines from US')
 
-# France
-m_france <- df_wine %>% filter(country == 'France') %>% fnMakeWordCountMatrix()
-
-library(dplyr)
-glimpse(m_italy)
-glimpse(m_france)
-glimpse(df_wine %>% filter(country == 'Italy'))
-# US
-m_us <- df_wine %>% filter(country == 'US') %>% sample_n(10000) %>% fnMakeWordCountMatrix()
-glimpse(m_us)
-m_us
-
-# temp <- df_wine %>% filter(country == 'US') %>% slice(1)
-# corp <- Corpus(VectorSource(temp$description))
-# toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
-# corp <- tm_map(corp, toSpace, "[\\.,(\\s-\\s)]")
-# corp <- tm_map(corp, toSpace, "\\s-\\s")
-# corp <- tm_map(corp, toSpace, "\\\\u0097")
-# corp <- tm_map(corp, as_utf8)
-
-m_italy %>% fnDrawWordCloud(title = 'Wines from Italy')
-m_france %>% fnDrawWordCloud(title = 'Wines from France')
-m_us %>% fnDrawWordCloud(title = 'Wines from US')
-
-# The full dataset is too big.
-# m <- as.matrix(dtm) # Cannot allocate vector of size 42.2 Gb! :-O
-# Something online recommended doing sparseMatrix instead, but I still can't turn it back into a matrix if it's too large...
-# m_sparse <- sparseMatrix(i = dtm$i, j = dtm$j, x = dtm$v, dims = c(dtm$nrow, dtm$ncol), dimnames = dtm$dimnames)
 
 ```
 
@@ -335,6 +322,7 @@ varieties %>%
   ggtitle('30 most reviewed grape varieties')
 ```
 What are the most common words in wine reviews for the top 3 reviewed varieties?
+(Bar charts would be more useful, but word clouds are more fun.)
 ```{r}
 m_pinotnoir <- df_wine %>% filter(variety == 'Pinot Noir') %>% fnMakeWordCountMatrix()
 m_chard <- df_wine %>% filter(variety == 'Chardonnay') %>% fnMakeWordCountMatrix()
@@ -358,20 +346,98 @@ m_sauternes %>% fnDrawWordCloud(title = 'Sauternes')
 m_sauternes_2005 %>% fnDrawWordCloud(title = 'Sauternes 2005')
 ```
 ```{r}
-df_scraper <- read_csv('./data/facts_about_winereviews94p.csv', na = 'n/a') %>%
-  select(-vintage, -natural, -organic, -biodynamic, -buyUrl, -structureCount, -aromaIntensity, -primaryAromas, -secondaryAromas, -tertiaryAromas, -balance, -length, -finish, -complexity, -conclusion, -ageing, -quality, -body, -noseDevelopment, -noseIntensity, -colorIntensity, -color, -tertiaryFlavors)
+df_scraper <-
+  read_csv('./data/facts_about_winereviews94p.csv', na = 'n/a') %>%
+  select(-vintage, -natural, -organic, -biodynamic, -buyUrl, -structureCount, -aromaIntensity, -primaryAromas, -secondaryAromas, -tertiaryAromas, -balance, -length, -finish, -complexity, -conclusion, -ageing, -quality, -body, -noseDevelopment, -noseIntensity, -colorIntensity, -color, -tertiaryFlavors, -professionalReviews, -userReviews) %>%
+  distinct(`_id`, `_vintageId`, .keep_all = TRUE)
+
 glimpse(df_scraper)
+```
+
+``` {r}
+
+# df_scraperflavors <-
+#   df_scraper %>%
+#   select(`_id`, name, primaryFlavors, secondaryFlavors) %>%
+#   mutate(
+#     primaryFlavors = map(primaryFlavors, fromJSON),
+#     secondaryFlavors = map(secondaryFlavors, fromJSON)
+#   )
+# 
+# glimpse(df_scraperflavors)
+# 
+# all_primary_flavors <-
+#   df_scraperflavors %>%
+#   select(`_id`, primaryFlavors) %>%
+#   unnest(c(primaryFlavors)) %>%
+#   group_by(name) %>%
+#   summarize(count = sum(count))
+```
+
+``` {r json}
+# df_scraperflavors %>%
+#   #slice(1:4) %>%
+#   mutate(fSweaty = map(primaryFlavors, fnListHasFlavor, 'sweaty saddle')) %>%
+#   unnest(fSweaty) %>%
+#   filter(fSweaty) %>%
+#   select(name) %>%
+#   knitr::kable(caption = 'Wines characterized as "sweaty saddle"')
+
+df_scraper_json <-
+  df_scraper %>%
+  mutate(
+    primaryFlavors = map(primaryFlavors, fromJSON),
+    secondaryFlavors = map(secondaryFlavors, fromJSON),
+    grapes = map(grapes, fromJSON)
+  )
+
+glimpse(df_scraper_json)
+```
 
 
-jsonSample <- df_scraper$primaryFlavors[1]
-library(jsonlite)
-df_json <- fromJSON(jsonSample)
-df_json %>% tibble()
 
-df_small <- df_scraper %>% slice(1:3)
-df_flavors <- map_df(df_small$primaryFlavors, fromJSON) %>% group_by(name) %>% summarize(count = sum(count))
-df_small %>% slice(c(1, 3)) %>% mutate(flavorlist = map(primaryFlavors, fromJSON), )
-#typeof(fromJSON(df_small$primaryFlavors[1]))
+``` {r grapes}
+df_grapes <-
+  df_scraper_json %>%
+  unnest(grapes) %>%
+  group_by(grapes, tannin) %>%
+  summarize(winecount = n()) %>%
+  mutate(is_white = is.na(tannin)) %>%
+  arrange(desc(winecount)) #%>%
+  #write_csv('./data/grapes.csv')
+
+df_grapes
+```
+
+
+``` {r findflavor}
+# Return TRUE if the requested flavorname is in the list. Helper for the nested dataframe columns.
+fnListHasElement <-
+  function(li, elementname)
+  {
+    has_element(li$name, elementname)
+  }
+
+#map((df_scraper_json %>% slice(1:4))$primaryFlavors, fnListHasFlavor, 'vanilla')
+```
+
+
+
+``` {r sweaty}
+df_sweaty <-
+  df_scraper_json %>%
+  mutate(fSweaty = map(primaryFlavors, fnListHasElement, 'sweaty saddle')) %>%
+  unnest(fSweaty) %>%
+  filter(fSweaty)
+
+df_sweaty %>%
+  select(name, price) %>%
+  knitr::kable(caption = 'Wines characterized as "sweaty saddle"')
+
+  
+# glimpse(all_primary_flavors)
+# tibble(all_primary_flavors %>% arrange(count))
+
 ```
 
 ```
